@@ -2,11 +2,9 @@ package com.bistu.controller;
 
 import com.bistu.dis.DisUser;
 import com.bistu.entity.Result;
+import com.bistu.entity.User;
 import com.bistu.servise.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +31,15 @@ public class UserController {
     @PutMapping("/registerMerchant")
     public Result registerMerchant(Integer id, String storeName, String license){
         userService.registerMerchant(id,storeName,license);
+        return Result.success();
+    }
+    @GetMapping("queryMessage/{id}")
+    public Result queryMessage(@PathVariable Integer id){
+        return Result.success(userService.queryMessage(id));
+    }
+    @PutMapping("updateMessage")
+    public Result updateMessage(@RequestBody User user){
+        userService.updateMessage(user);
         return Result.success();
     }
 }

@@ -5,10 +5,10 @@
 <mapper namespace="com.bistu.mapper.UserMapper">
     <insert id="signup" parameterType="com.bistu.entity.User">
         INSERT INTO user (name, username, password, gender, city,
-                            phone_number, email, bank_card_number, identity, create_time, update_time, state)
+        phone_number, email, bank_card_number, identity, create_time, update_time, state)
         VALUES (#{name}, #{username}, #{password}, #{gender}, #{city},
-                #{phoneNumber}, #{email}, #{bankCardNumber},
-                #{identity}, #{createTime}, #{updateTime}, #{state});
+        #{phoneNumber}, #{email}, #{bankCardNumber},
+        #{identity}, #{createTime}, #{updateTime}, #{state});
     </insert>
 
     <insert id="addAccount" parameterType="com.bistu.entity.Account">
@@ -20,5 +20,16 @@
         insert into sub_merchant(user_id,store_name,license)
         values(#{userId},#{storeName},#{license})
     </insert>
+
+    <update id="updateMessage" parameterType="com.bistu.entity.User">
+        update user set
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="address != null">
+                 address = #{address}
+            </if>
+        where id = #{id}
+    </update>
 
 </mapper>

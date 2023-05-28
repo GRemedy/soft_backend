@@ -16,4 +16,7 @@ public interface UserService {
 
     void registerMerchant(Integer id, String storeName, String license);
 
+    User queryMessage(Integer id);
+
+    void updateMessage(User user);
 }

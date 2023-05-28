@@ -7,10 +7,10 @@
             select * from product
         <where>
             <if test="name != null">
-                name like concat('%', #{name},'%')
+                name like concat('%', #{name},'%'),
             </if>
             <if test="category != null ">
-                category like concat('%', #{category},'%')
+                category like concat('%', #{category},'%'),
             </if>
             <if test="storeName != null">
                 store_id IN (

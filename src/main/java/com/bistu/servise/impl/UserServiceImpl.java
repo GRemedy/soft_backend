@@ -66,4 +66,15 @@ public class UserServiceImpl implements UserService {
         subMerchant.setStoreName(storeName);
         userMapper.buildSubMerchant(subMerchant);
     }
+
+    @Override
+    public User queryMessage(Integer id) {
+        return userMapper.queryMessage(id);
+    }
+
+    @Override
+    public void updateMessage(User user) {
+        user.setPassword(encodePassword(user.getPassword()));
+        userMapper.updateMessage(user);
+    }
 }

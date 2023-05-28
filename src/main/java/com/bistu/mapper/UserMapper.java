@@ -27,4 +27,9 @@ public interface UserMapper {
     void registerMerchant(Integer id);
 
     void buildSubMerchant(SubMerchant subMerchant);
+
+    @Select("select * from user where id = #{id}")
+    User queryMessage(Integer id);
+
+    void updateMessage(User user);
 }
