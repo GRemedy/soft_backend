@@ -1,8 +1,7 @@
 package com.bistu.servise.impl;
 
-import com.bistu.dis.DISProduct;
+import com.bistu.dis.DisProduct;
 import com.bistu.entity.PageBean;
-import com.bistu.entity.Product;
 import com.bistu.mapper.ProductMapper;
 import com.bistu.servise.ProductService;
 import com.bistu.utils.ProToDisProMap;
@@ -29,13 +28,12 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public PageBean getAll(Integer start , Integer pageSize) {
+    public PageBean getAll(Integer start , Integer pageSize , String name , String category , String storeName) {
 
-        PageHelper.startPage(start,pageSize);
+        PageHelper.startPage(start, pageSize);
 
-        List<Product> products = productMapper.getAll();
-        List<DISProduct> disProducts = proToDisProMap.proToDisProMap(products);
-        Page<DISProduct> disProductPage = (Page<DISProduct>) disProducts;
+        List<DisProduct> disProducts = productMapper.getAll(name,category,storeName);
+        Page<DisProduct> disProductPage = (Page<DisProduct>) disProducts;
 
         return new PageBean(disProductPage.getTotal(),disProductPage.getResult());
     }

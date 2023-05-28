@@ -13,7 +13,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
-    private int id;
+    private Integer id;
+    private Integer storeId;
     private String name;
     private String category;
     private String size;

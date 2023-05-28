@@ -8,5 +8,5 @@ import com.bistu.entity.PageBean;
  * @Date : 2023/5/26
  */
 public interface ProductService {
-    PageBean getAll(Integer start, Integer pageSize);
+    PageBean getAll(Integer start, Integer pageSize,String name ,String category, String storeName);
 }

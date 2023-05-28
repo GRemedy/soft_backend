@@ -30,4 +30,9 @@ public class UserController {
         userService.audit(ids);
         return Result.success();
     }
+    @PutMapping("/registerMerchant")
+    public Result registerMerchant(Integer id, String storeName, String license){
+        userService.registerMerchant(id,storeName,license);
+        return Result.success();
+    }
 }

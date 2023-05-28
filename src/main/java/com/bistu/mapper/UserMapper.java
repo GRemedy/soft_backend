@@ -1,5 +1,6 @@
 package com.bistu.mapper;
 
+import com.bistu.entity.SubMerchant;
 import com.bistu.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -15,10 +16,15 @@ public interface UserMapper {
     void signup(User user);
 
     void addAccount();
+
     @Select("select * from user where state = 0")
     List<User> selectStateEqual0();
 
     @Update("update user set state = 1 where id in #{id}")
     void audit(List<Integer> id);
 
+    @Update("update user set identity = 'Merchant' where id = #{id}")
+    void registerMerchant(Integer id);
+
+    void buildSubMerchant(SubMerchant subMerchant);
 }

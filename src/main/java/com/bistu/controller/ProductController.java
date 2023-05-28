@@ -31,9 +31,11 @@ public class ProductController {
     **/
     @GetMapping
     public Result getAll(@RequestParam(defaultValue = "1") Integer start,
-                         @RequestParam(defaultValue = "10")Integer pageSize) {
+                         @RequestParam(defaultValue = "10")Integer pageSize,
+                        String name,String category,String storeName) {
 
-        PageBean products = productService.getAll(start, pageSize);
+        PageBean products = productService.getAll(start, pageSize,name,category,storeName);
         return Result.success(products);
     }
+
 }

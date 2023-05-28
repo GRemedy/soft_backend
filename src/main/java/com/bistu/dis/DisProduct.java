@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DISProduct {
+public class DisProduct {
     private String name;
     private String category;
     private String size;

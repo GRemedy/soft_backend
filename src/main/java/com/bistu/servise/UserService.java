@@ -14,4 +14,6 @@ public interface UserService {
 
     List<DisUser> selectStateEqual0();
 
+    void registerMerchant(Integer id, String storeName, String license);
+
 }

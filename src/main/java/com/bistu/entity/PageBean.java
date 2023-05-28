@@ -1,9 +1,10 @@
 package com.bistu.entity;
 
-import com.bistu.dis.DISProduct;
+import com.bistu.dis.DisProduct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -15,7 +16,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class PageBean {
     private Long total;
-    private List<DISProduct> result;
+    private List<DisProduct> result;
 }

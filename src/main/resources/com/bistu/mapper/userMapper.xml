@@ -16,4 +16,9 @@
         VALUES (LAST_INSERT_ID(), 0.0, 0, now(), now() );
     </insert>
 
+    <insert id="buildSubMerchant" parameterType="com.bistu.entity.SubMerchant">
+        insert into sub_merchant(user_id,store_name,license)
+        values(#{userId},#{storeName},#{license})
+    </insert>
+
 </mapper>

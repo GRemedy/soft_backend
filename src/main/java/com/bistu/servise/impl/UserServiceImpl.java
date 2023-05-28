@@ -2,6 +2,7 @@ package com.bistu.servise.impl;
 
 import com.bistu.Enum.Identity;
 import com.bistu.dis.DisUser;
+import com.bistu.entity.SubMerchant;
 import com.bistu.entity.User;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.UserService;
@@ -36,8 +37,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodePassword(user.getPassword()));
         user.setUpdateTime(LocalDateTime.now());
         user.setCreateTime(LocalDateTime.now());
-        user.setIdentity(Identity.User);
-        user.setState(-1);
+        if(user.getIdentity()==null){
+            user.setIdentity(Identity.User);
+        }
+        if(user.getState() == null){
+            user.setState(0);
+        }
         userMapper.signup(user);
         userMapper.addAccount();
     }
@@ -50,5 +55,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<DisUser> selectStateEqual0() {
         return userToDisUserMap.userToDisUserMap(userMapper.selectStateEqual0());
+    }
+
+    @Override
+    public void registerMerchant(Integer id, String storeName ,String license) {
+        userMapper.registerMerchant(id);
+        SubMerchant subMerchant = new SubMerchant();
+        subMerchant.setUserId(id);
+        subMerchant.setLicense(license);
+        subMerchant.setStoreName(storeName);
+        userMapper.buildSubMerchant(subMerchant);
     }
 }
