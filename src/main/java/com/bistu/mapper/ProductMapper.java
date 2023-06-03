@@ -1,11 +1,11 @@
 package com.bistu.mapper;
 
-import com.bistu.dis.DisProduct;
 import com.bistu.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Gremedy
@@ -14,7 +14,10 @@ import java.util.List;
  */
 @Mapper
 public interface ProductMapper {
-    @Select("select * from product")
-    List<DisProduct> getAll(Product product,Integer grade, String storeName , boolean isDESC);
+
+    List<Product> getAll(Map<String,Object> paraMap);
+
+    @Select("SELECT COUNT(*) FROM product")
+    Long getCount(Map<String, Object> paramMap);
 
 }

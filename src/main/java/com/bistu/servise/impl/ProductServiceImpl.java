@@ -5,11 +5,11 @@ import com.bistu.entity.PageBean;
 import com.bistu.entity.Product;
 import com.bistu.mapper.ProductMapper;
 import com.bistu.servise.ProductService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.bistu.utils.ProToDisProMap;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Gremedy
@@ -19,23 +19,22 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
+    private final ProToDisProMap proToDisProMap;
 
 
-    public ProductServiceImpl(ProductMapper productMapper) {
+    public ProductServiceImpl(ProductMapper productMapper, ProToDisProMap proToDisProMap) {
         this.productMapper = productMapper;
-
+        this.proToDisProMap = proToDisProMap;
     }
 
 
 
     @Override
-    public PageBean getAll(Integer start, Integer pageSize, Product product, Integer grade, String storeName, boolean isDESC) {
+    public PageBean getAll(Map<String,Object> paraMap) {
+        Long count = productMapper.getCount(paraMap);
+        List<Product> products = productMapper.getAll(paraMap);
+        List<DisProduct> disProducts = proToDisProMap.proToDisProMap(products);
 
-        PageHelper.startPage(start, pageSize);
-
-        List<DisProduct> disProducts = productMapper.getAll(product,grade,storeName,isDESC);
-        Page<DisProduct> disProductPage = (Page<DisProduct>) disProducts;
-
-        return new PageBean(disProductPage.getTotal(),disProductPage.getResult());
+        return new PageBean(count,disProducts);
     }
 }
