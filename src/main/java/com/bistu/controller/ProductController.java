@@ -1,6 +1,7 @@
 package com.bistu.controller;
 
 import com.bistu.entity.PageBean;
+import com.bistu.entity.Product;
 import com.bistu.entity.Result;
 import com.bistu.servise.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +32,15 @@ public class ProductController {
     **/
     @GetMapping
     public Result getAll(@RequestParam(defaultValue = "1") Integer start,
-                         @RequestParam(defaultValue = "10")Integer pageSize,
-                        String name,String category,String storeName) {
-
-        PageBean products = productService.getAll(start, pageSize,name,category,storeName);
+                         @RequestParam(defaultValue = "20")Integer pageSize,
+                        String name,String category,Double price, Integer grade,Integer salesVolume,
+                         String storeName , boolean isDESC) {
+        Product product = new Product();
+        product.setCategory(category);
+        product.setName(name);
+        product.setPrice(price);
+        product.setSalesVolume(salesVolume);
+        PageBean products = productService.getAll(start, pageSize,product,grade,storeName,isDESC);
         return Result.success(products);
     }
 

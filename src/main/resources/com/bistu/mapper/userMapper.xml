@@ -27,7 +27,13 @@
                 password = #{password},
             </if>
             <if test="address != null">
-                 address = #{address}
+                 address = #{address},
+            </if>
+            <if test="image != null">
+                image = #{image}
+            </if>
+            <if test="selfIntroduction != null">
+                self_introduction = #{selfIntroduction}
             </if>
         where id = #{id}
     </update>

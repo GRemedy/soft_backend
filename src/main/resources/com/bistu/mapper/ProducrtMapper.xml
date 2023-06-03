@@ -17,7 +17,10 @@
                 SELECT id
                 FROM sub_merchant
                 WHERE store_name like concat('%', storeName, '%')
-                );
+                )
+            </if>
+            <if test="orderByColumn != null and orderByDirection != null">
+                ORDER BY #{orderByColumn} #{orderByDirection}
             </if>
         </where>
     </select>
