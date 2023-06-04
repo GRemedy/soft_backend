@@ -1,11 +1,14 @@
 package com.bistu.servise.impl;
 
 import com.bistu.Enum.Identity;
+import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
+import com.bistu.entity.Product;
 import com.bistu.entity.SubMerchant;
 import com.bistu.entity.User;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.UserService;
+import com.bistu.utils.ProToDisProMap;
 import com.bistu.utils.UserToDisUserMap;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +23,13 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserToDisUserMap userToDisUserMap;
 
+    private final ProToDisProMap proToDisProMap;
 
-    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap) {
+
+    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap) {
         this.userMapper = userMapper;
         this.userToDisUserMap = userToDisUserMap;
+        this.proToDisProMap = proToDisProMap;
     }
 
     @Override
@@ -76,5 +82,11 @@ public class UserServiceImpl implements UserService {
     public void updateMessage(User user) {
         user.setPassword(encodePassword(user.getPassword()));
         userMapper.updateMessage(user);
+    }
+
+    @Override
+    public List<DisProduct> historyData(Integer id) {
+        List<Product> products = userMapper.historyData(id);
+        return proToDisProMap.proToDisProMap(products);
     }
 }

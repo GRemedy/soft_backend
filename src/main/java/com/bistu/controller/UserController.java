@@ -42,4 +42,9 @@ public class UserController {
         userService.updateMessage(user);
         return Result.success();
     }
+
+    @GetMapping("historyData")
+    public Result historyData(Integer id){
+        return Result.success(userService.historyData(id));
+    }
 }

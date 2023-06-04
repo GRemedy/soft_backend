@@ -1,5 +1,6 @@
 package com.bistu.servise;
 
+import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
 import com.bistu.entity.User;
 
@@ -19,4 +20,6 @@ public interface UserService {
     User queryMessage(Integer id);
 
     void updateMessage(User user);
+
+    List<DisProduct> historyData(Integer id);
 }
