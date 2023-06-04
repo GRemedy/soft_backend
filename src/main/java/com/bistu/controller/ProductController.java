@@ -1,9 +1,6 @@
 package com.bistu.controller;
 
-import com.bistu.entity.PageBean;
-import com.bistu.entity.Result;
-import com.bistu.entity.ShoppingCart;
-import com.bistu.entity.Transaction;
+import com.bistu.entity.*;
 import com.bistu.servise.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,5 +68,15 @@ public class ProductController {
         shoppingCart.setUserId(userId);
         productService.shoppingCart(shoppingCart);
         return Result.success("成功添加到购物车");
+    }
+    @PutMapping("/comment")
+    public Result comment(Integer userId,Integer productId,Integer grade,String content){
+        Comment comment = new Comment();
+        comment.setContent(content);
+        comment.setProductId(productId);
+        comment.setGrade(grade);
+        comment.setUserId(userId);
+        productService.comment(comment);
+        return Result.success("评论成功");
     }
 }

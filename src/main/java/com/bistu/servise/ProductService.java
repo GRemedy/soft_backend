@@ -1,9 +1,6 @@
 package com.bistu.servise;
 
-import com.bistu.entity.Coupon;
-import com.bistu.entity.PageBean;
-import com.bistu.entity.ShoppingCart;
-import com.bistu.entity.Transaction;
+import com.bistu.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,4 +20,6 @@ public interface ProductService {
     void perchase(Transaction transaction, Integer couponId);
 
     void shoppingCart(ShoppingCart shoppingCart);
+
+    void comment(Comment comment);
 }

@@ -53,4 +53,9 @@
         values(#{userId},#{productId},#{quantity},#{createTime},#{updateTime})
     </insert>
 
+    <insert id="comment" parameterType="com.bistu.entity.Comment">
+        insert into comment(user_id,product_id,grade,content,create_time,update_time)
+        values(#{userId},#{productId},#{grade},#{content},#{createTime},#{updateTime})
+    </insert>
+
 </mapper>

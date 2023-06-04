@@ -1,9 +1,6 @@
 package com.bistu.mapper;
 
-import com.bistu.entity.Coupon;
-import com.bistu.entity.Product;
-import com.bistu.entity.ShoppingCart;
-import com.bistu.entity.Transaction;
+import com.bistu.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -38,4 +35,14 @@ public interface ProductMapper {
     void updateProduct(Transaction transaction);
 
     void shoppingCart(ShoppingCart shoppingCart);
+
+
+    void comment(Comment comment);
+    @Update("update product set rating = #{rating} where id = #{id}")
+    void updateRating(Double rating , Integer id);
+    @Select("select count(*) from comment where product_id = #{id}")
+    Integer getTotalComment(Integer id);
+
+    @Select("select count(*) from comment where grade >= 4 and product_id = #{id}")
+    Integer getGoodComment(Integer id);
 }

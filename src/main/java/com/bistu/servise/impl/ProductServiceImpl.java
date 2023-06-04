@@ -7,6 +7,7 @@ import com.bistu.mapper.ProductMapper;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.ProductService;
 import com.bistu.utils.ProToDisProMap;
+import com.bistu.utils.UpdateRating;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,11 +26,14 @@ public class ProductServiceImpl implements ProductService {
     private final ProToDisProMap proToDisProMap;
     private final UserMapper userMapper;
 
+    private final UpdateRating updateRating;
 
-    public ProductServiceImpl(ProductMapper productMapper, ProToDisProMap proToDisProMap, UserMapper userMapper) {
+
+    public ProductServiceImpl(ProductMapper productMapper, ProToDisProMap proToDisProMap, UserMapper userMapper, UpdateRating updateRating) {
         this.productMapper = productMapper;
         this.proToDisProMap = proToDisProMap;
         this.userMapper = userMapper;
+        this.updateRating = updateRating;
     }
 
 
@@ -86,6 +90,14 @@ public class ProductServiceImpl implements ProductService {
         shoppingCart.setCreateTime(LocalDateTime.now());
         shoppingCart.setUpdateTime(LocalDateTime.now());
         productMapper.shoppingCart(shoppingCart);
+    }
+
+    @Override
+    public void comment(Comment comment) {
+        comment.setCreateTime(LocalDateTime.now());
+        comment.setUpdateTime(LocalDateTime.now());
+        productMapper.comment(comment);
+        updateRating.updateRate(comment.getProductId());
     }
 
     @Override
