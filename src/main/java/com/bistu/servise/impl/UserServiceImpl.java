@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -102,17 +104,34 @@ public class UserServiceImpl implements UserService {
         List<Product> products = transToProductMap.transToProductMap(transactions);
         List<DisProduct> disProducts = proToDisProMap.proToDisProMap(products);
 
+        Map<Integer, DisProduct> mergedMap = new HashMap<>();
+
+        for (DisProduct disProduct : disProducts) {
+            int productId = disProduct.getId();
+            if (mergedMap.containsKey(productId)) {
+                DisProduct mergedProduct = mergedMap.get(productId);
+                // 合并当前DisProduct和已存在的DisProduct的属性
+                mergedProduct.setSalesVolume(mergedProduct.getSalesVolume() + disProduct.getSalesVolume());
+                // 在此处添加要合并的其他属性
+                // ...
+            } else {
+                // 将当前DisProduct添加到Map中
+                mergedMap.put(productId, disProduct);
+            }
+        }
+
         Map<Integer, List<LocalDateTime>> paymentTimeMap = transactions.stream()
                 .collect(Collectors.groupingBy(Transaction::getProductId,
                         Collectors.mapping(Transaction::getPaymentTime, Collectors.toList())));
-        for (DisProduct disProduct : disProducts) {
+        for (DisProduct disProduct : mergedMap.values()) {
             int productId = disProduct.getId();
             if (paymentTimeMap.containsKey(productId)) {
                 List<LocalDateTime> paymentTimes = paymentTimeMap.get(productId);
                 disProduct.setPaymentTimes(paymentTimes);
             }
         }
-        return disProducts;
+
+        return new ArrayList<>(mergedMap.values());
     }
 
     @Override
