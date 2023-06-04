@@ -18,4 +18,18 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
+agile:
+  kaptcha:
+    enable: on
+    text: abcdefghijklmnopqrstuvwxyz0123456789
+    url: /code
+    properties:
+      kaptcha:
+        textproducer:
+          char:
+            length: 6
+          font:
+            names: 微软雅黑
+          impl: cloud.agileframework.kaptcha.kaptcha.AgileTextProducer
+    live-time: 300s
 

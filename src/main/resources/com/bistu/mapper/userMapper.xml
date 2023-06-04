@@ -21,6 +21,7 @@
         values(#{userId},#{storeName},#{license})
     </insert>
 
+
     <update id="updateMessage" parameterType="com.bistu.entity.User">
         update user set
             <if test="password != null">

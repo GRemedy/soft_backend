@@ -2,11 +2,10 @@ package com.bistu.controller;
 
 import com.bistu.entity.PageBean;
 import com.bistu.entity.Result;
+import com.bistu.entity.ShoppingCart;
+import com.bistu.entity.Transaction;
 import com.bistu.servise.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +42,6 @@ public class ProductController {
         paraMap.put("name",name);
         paraMap.put("category",category);
         paraMap.put("price",price);
-        paraMap.put("grade",grade);
         paraMap.put("salesVolume",salesVolume);
         paraMap.put("storeName",storeName);
         paraMap.put("isDESC",isDESC);
@@ -51,4 +49,27 @@ public class ProductController {
         return Result.success(products);
     }
 
+    @GetMapping("/prePerchase")
+    public Result prePerchase(Integer id){
+        return Result.success(productService.prePerchase(id));
+    }
+
+    @PutMapping("/perchase")
+    public Result perchase(Integer userId,Integer productId,Integer couponId,Integer quantity){
+        Transaction transaction = new Transaction();
+        transaction.setQuantity(quantity);
+        transaction.setProductId(productId);
+        transaction.setUserId(userId);
+        productService.perchase(transaction,couponId);
+        return Result.success("购买成功");
+    }
+    @PutMapping("/shoppingCart")
+    public Result shoppingCart(Integer userId,Integer productId,Integer quantity){
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setProductId(productId);
+        shoppingCart.setQuantity(quantity);
+        shoppingCart.setUserId(userId);
+        productService.shoppingCart(shoppingCart);
+        return Result.success("成功添加到购物车");
+    }
 }
