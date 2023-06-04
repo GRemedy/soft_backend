@@ -34,7 +34,7 @@ public class ProductController {
     @GetMapping
     public Result getAll(@RequestParam(defaultValue = "1") Integer start,
                          @RequestParam(defaultValue = "20")Integer pageSize,
-                        String name,String category,Double price, Integer grade,Integer salesVolume,
+                        String name,String category,Double price, Integer salesVolume,
                          String storeName , boolean isDESC) {
         Map<String,Object> paraMap = new HashMap<>();
         paraMap.put("start",start);

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -19,9 +19,9 @@ public class Transaction {
     private CouponType discount;
     private TransactionStatus status;
     private double paid;
-    private LocalDate createTime;
-    private LocalDate paymentTime;
-    private LocalDate deliveryTime;
-    private LocalDate dealTime;
-    private LocalDate updateTime;
+    private LocalDateTime createTime;
+    private LocalDateTime paymentTime;
+    private LocalDateTime deliveryTime;
+    private LocalDateTime dealTime;
+    private LocalDateTime updateTime;
 }

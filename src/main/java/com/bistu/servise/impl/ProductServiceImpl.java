@@ -9,7 +9,6 @@ import com.bistu.servise.ProductService;
 import com.bistu.utils.ProToDisProMap;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -54,9 +53,9 @@ public class ProductServiceImpl implements ProductService {
                     if (value > 1){
                         double paid = product.getPrice() * transaction.getQuantity() - value;
                         transaction.setPaid(paid);
-                        transaction.setCreateTime(LocalDate.now());
-                        transaction.setPaymentTime(LocalDate.now());
-                        transaction.setUpdateTime(LocalDate.now());
+                        transaction.setCreateTime(LocalDateTime.now());
+                        transaction.setPaymentTime(LocalDateTime.now());
+                        transaction.setUpdateTime(LocalDateTime.now());
                         transaction.setDiscount(coupon.getCouponType());
                         transaction.setStatus(TransactionStatus.WAITING_FOR_SHIPPING);
                         productMapper.perchase(transaction);
@@ -67,9 +66,9 @@ public class ProductServiceImpl implements ProductService {
                 else {
                     double paid = product.getPrice()*transaction.getQuantity();
                     transaction.setPaid(paid);
-                    transaction.setCreateTime(LocalDate.now());
-                    transaction.setPaymentTime(LocalDate.now());
-                    transaction.setUpdateTime(LocalDate.now());
+                    transaction.setCreateTime(LocalDateTime.now());
+                    transaction.setPaymentTime(LocalDateTime.now());
+                    transaction.setUpdateTime(LocalDateTime.now());
                     transaction.setDiscount(null);
                     transaction.setStatus(TransactionStatus.WAITING_FOR_SHIPPING);
                     productMapper.perchase(transaction);

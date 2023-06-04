@@ -1,9 +1,6 @@
 package com.bistu.mapper;
 
-import com.bistu.entity.Account;
-import com.bistu.entity.Product;
-import com.bistu.entity.SubMerchant;
-import com.bistu.entity.User;
+import com.bistu.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -42,6 +39,6 @@ public interface UserMapper {
     void perchase(Double paid, Integer id);
 
     @Select("select * from transaction where user_id = #{id}")
-    List<Product> historyData(Integer id);
+    List<Transaction> historyData(Integer id);
 
 }
