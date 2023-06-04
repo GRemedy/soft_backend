@@ -2,6 +2,7 @@ package com.bistu.servise;
 
 import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
+import com.bistu.entity.Account;
 import com.bistu.entity.User;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface UserService {
     void updateMessage(User user);
 
     List<DisProduct> historyData(Integer id);
+
+    Account getAccount(Integer id);
 }

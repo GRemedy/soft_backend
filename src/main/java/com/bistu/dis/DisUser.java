@@ -21,4 +21,5 @@ public class DisUser {
     private String email;
     private String bankCardNumber;
     private Identity identity;
+    private String avatar;
 }

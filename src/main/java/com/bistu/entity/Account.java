@@ -16,4 +16,6 @@ public class Account {
     private Integer point;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    private LocalDateTime incomeTime;
+    private LocalDateTime outcomeTime;
 }

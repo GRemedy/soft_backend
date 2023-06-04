@@ -1,6 +1,7 @@
 package com.bistu.controller;
 
 import com.bistu.dis.DisUser;
+import com.bistu.entity.Account;
 import com.bistu.entity.Result;
 import com.bistu.entity.User;
 import com.bistu.servise.UserService;
@@ -46,5 +47,11 @@ public class UserController {
     @GetMapping("historyData")
     public Result historyData(Integer id){
         return Result.success(userService.historyData(id));
+    }
+
+    @GetMapping("/getAccount")
+    public Result getAccount(Integer id){
+        Account account = userService.getAccount(id);
+        return Result.success(account);
     }
 }

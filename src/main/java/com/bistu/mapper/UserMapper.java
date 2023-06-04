@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -32,13 +33,12 @@ public interface UserMapper {
 
     void updateMessage(User user);
 
-    @Select("select balance from account where user_id = #{id}")
+    @Select("select * from account where user_id = #{id}")
     Account getAccount(Integer id);
 
-    @Update("update account set balance = balance - #{paid} where user_id = #{id}")
-    void perchase(Double paid, Integer id);
+    @Update("update account set balance = balance - #{paid} ,outcome_time = #{outcomeTime} where user_id = #{id}")
+    void perchase(Double paid, LocalDateTime outcomeTime, Integer id);
 
     @Select("select * from transaction where user_id = #{id}")
     List<Transaction> historyData(Integer id);
-
 }

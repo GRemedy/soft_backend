@@ -27,6 +27,8 @@ public class Product {
     private int salesVolume;
     private DamageLevel damageLevel;
     private ProductStatus status;
+    private int perchaseCount;
+    private double rating;
     private LocalDate createTime;
     private LocalDate updateTime;
 }

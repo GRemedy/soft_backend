@@ -8,6 +8,7 @@ import com.bistu.mapper.UserMapper;
 import com.bistu.servise.ProductService;
 import com.bistu.utils.ProToDisProMap;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void perchase(Transaction transaction ,Integer couponId) {
         Product product = productMapper.getProduct(transaction.getProductId());
         if (transaction.getQuantity() <= product.getQuantity()){
@@ -59,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
                         transaction.setDiscount(coupon.getCouponType());
                         transaction.setStatus(TransactionStatus.WAITING_FOR_SHIPPING);
                         productMapper.perchase(transaction);
-                        userMapper.perchase(paid,transaction.getUserId());
+                        userMapper.perchase(paid,LocalDateTime.now(),transaction.getUserId());
                         productMapper.updateProduct(transaction);
                 }
                 }
@@ -72,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
                     transaction.setDiscount(null);
                     transaction.setStatus(TransactionStatus.WAITING_FOR_SHIPPING);
                     productMapper.perchase(transaction);
-                    userMapper.perchase(paid,transaction.getUserId());
+                    userMapper.perchase(paid,LocalDateTime.now(),transaction.getUserId());
                     productMapper.updateProduct(transaction);
                 }
             }

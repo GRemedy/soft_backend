@@ -27,6 +27,8 @@ public class DisProduct {
     private int salesVolume;
     private DamageLevel damageLevel;
     private ProductStatus status;
+    private int perchaseCount;
+    private double rating;
     private List<LocalDateTime> paymentTimes;
 
 }

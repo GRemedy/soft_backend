@@ -3,16 +3,14 @@ package com.bistu.servise.impl;
 import com.bistu.Enum.Identity;
 import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
-import com.bistu.entity.Product;
-import com.bistu.entity.SubMerchant;
-import com.bistu.entity.Transaction;
-import com.bistu.entity.User;
+import com.bistu.entity.*;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.UserService;
 import com.bistu.utils.ProToDisProMap;
 import com.bistu.utils.TransToProductMap;
 import com.bistu.utils.UserToDisUserMap;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,6 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void signup(User user) {
         user.setPassword(encodePassword(user.getPassword()));
         user.setUpdateTime(LocalDateTime.now());
@@ -113,7 +112,11 @@ public class UserServiceImpl implements UserService {
                 disProduct.setPaymentTimes(paymentTimes);
             }
         }
-
         return disProducts;
+    }
+
+    @Override
+    public Account getAccount(Integer id) {
+        return userMapper.getAccount(id);
     }
 }
