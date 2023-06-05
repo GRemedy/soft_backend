@@ -100,6 +100,7 @@ public class ProductServiceImpl implements ProductService {
         updateRating.updateRate(comment.getProductId());
     }
 
+
     @Override
     public List<Coupon> prePerchase(Integer id) {
         return productMapper.getCoupon(id);

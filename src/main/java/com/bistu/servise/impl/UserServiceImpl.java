@@ -138,4 +138,9 @@ public class UserServiceImpl implements UserService {
     public Account getAccount(Integer id) {
         return userMapper.getAccount(id);
     }
+
+    @Override
+    public List<Comment> getComment(Integer id) {
+        return userMapper.getComment(id);
+    }
 }

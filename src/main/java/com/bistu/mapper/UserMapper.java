@@ -41,4 +41,7 @@ public interface UserMapper {
 
     @Select("select * from transaction where user_id = #{id}")
     List<Transaction> historyData(Integer id);
+
+    @Select("select * from comment where user_id = #{id}")
+    List<Comment> getComment(Integer id);
 }

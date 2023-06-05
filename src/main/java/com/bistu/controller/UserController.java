@@ -54,4 +54,8 @@ public class UserController {
         Account account = userService.getAccount(id);
         return Result.success(account);
     }
+    @GetMapping("/getComment")
+    public Result getComment(Integer id){
+        return Result.success(userService.getComment(id));
+    }
 }
