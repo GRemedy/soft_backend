@@ -31,7 +31,9 @@ public interface ProductMapper {
     @Select("select * from product where id = #{id}")
     Product getProduct(Integer id);
 
-    @Update("update product set quantity = quantity - #{quantity} ,update_time = #{paymentTime} where id = #{productId} ")
+    @Update("update product set quantity = quantity - #{quantity} " +
+            ",update_time = #{paymentTime} ,sales_volume = sales_volume + #{quantity}" +
+            " where id = #{productId} ")
     void updateProduct(Transaction transaction);
 
     void shoppingCart(ShoppingCart shoppingCart);

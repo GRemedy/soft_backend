@@ -37,6 +37,17 @@
                     order by sales_volume asc
                 </if>
             </when>
+            <when test="rating != null">
+                <if test="isDESC">
+                    order by rating desc
+                </if>
+                <if test="!isDESC">
+                    order by rating asc
+                </if>
+            </when>
+            <otherwise>
+                order by update_time desc
+            </otherwise>
         </choose>
         limit #{start},#{pageSize}
     </select>
