@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateMessage(User user) {
         user.setPassword(encodePassword(user.getPassword()));
+        user.setUpdateTime(LocalDateTime.now());
         userMapper.updateMessage(user);
     }
 

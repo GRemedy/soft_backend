@@ -24,18 +24,25 @@
 
     <update id="updateMessage" parameterType="com.bistu.entity.User">
         update user set
-            <if test="password != null">
-                password = #{password},
-            </if>
-            <if test="address != null">
-                 address = #{address},
-            </if>
-            <if test="image != null">
-                image = #{image}
-            </if>
-            <if test="selfIntroduction != null">
-                self_introduction = #{selfIntroduction}
-            </if>
+        <if test="username != null">
+            username = #{username},
+        </if>
+        <if test="password != null">
+            password = #{password},
+        </if>
+        <if test="address != null">
+            address = #{address},
+        </if>
+        <if test="avatar != null">
+            avatar = #{avatar},
+        </if>
+        <if test="selfIntroduction != null">
+            self_introduction = #{selfIntroduction},
+        </if>
+        <if test="city != null">
+            city = #{city},
+        </if>
+        update_time = #{updateTime}
         where id = #{id}
     </update>
 
