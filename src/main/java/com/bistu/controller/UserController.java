@@ -2,6 +2,7 @@ package com.bistu.controller;
 
 import com.bistu.dis.DisUser;
 import com.bistu.entity.Account;
+import com.bistu.entity.ChargeRecord;
 import com.bistu.entity.Result;
 import com.bistu.entity.User;
 import com.bistu.servise.UserService;
@@ -32,7 +33,7 @@ public class UserController {
     @PutMapping("/registerMerchant")
     public Result registerMerchant(Integer id, String storeName, String license){
         userService.registerMerchant(id,storeName,license);
-        return Result.success();
+        return Result.success("注册成功，请等待管理员审核");
     }
     @GetMapping("queryMessage/{id}")
     public Result queryMessage(@PathVariable Integer id){
@@ -41,7 +42,7 @@ public class UserController {
     @PutMapping("updateMessage")
     public Result updateMessage(@RequestBody User user){
         userService.updateMessage(user);
-        return Result.success();
+        return Result.success("修改成功");
     }
 
     @GetMapping("historyData")
@@ -67,5 +68,12 @@ public class UserController {
     @GetMapping("/getPaymentRecord")
     public Result getPaymentRecord(Integer id){
         return Result.success(userService.getPaymentRecord(id));
+    }
+
+
+    @PutMapping("/charge")
+    public Result charge(ChargeRecord chargeRecord){
+        userService.charge(chargeRecord);
+        return Result.success("充值成功");
     }
 }

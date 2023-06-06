@@ -155,4 +155,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.getPaymentRecord(id);
     }
 
+
+    @Override
+    public void charge(ChargeRecord chargeRecord) {
+        chargeRecord.setChargeTime(LocalDateTime.now());
+        userMapper.chargeAccount(chargeRecord);
+        userMapper.charge(chargeRecord);
+    }
+
 }

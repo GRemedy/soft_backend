@@ -66,4 +66,10 @@ public interface UserMapper {
 
     @Select("select * from payment_record where user_id= #{id}")
     List<PaymentRecord> getPaymentRecord(Integer id);
+
+   @Insert("insert into charge_record (user_id, amount, charge_time) " +
+           "VALUES (#{userId},#{amount},#{chargeTime}) ")
+    void charge(ChargeRecord chargeRecord);
+   @Update("update account set balance = balance + #{amount} , income_time = #{chargeTime},update_time = #{chargeTime}")
+   void chargeAccount(ChargeRecord chargeRecord);
 }
