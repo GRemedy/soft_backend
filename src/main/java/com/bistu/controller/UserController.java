@@ -58,4 +58,14 @@ public class UserController {
     public Result getComment(Integer id){
         return Result.success(userService.getComment(id));
     }
+
+    @GetMapping("/getChargeRecord")
+    public Result getChargeRecord(Integer id){
+        return Result.success(userService.getChargeRecord(id));
+    }
+
+    @GetMapping("/getPaymentRecord")
+    public Result getPaymentRecord(Integer id){
+        return Result.success(userService.getPaymentRecord(id));
+    }
 }

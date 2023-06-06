@@ -144,4 +144,15 @@ public class UserServiceImpl implements UserService {
     public List<Comment> getComment(Integer id) {
         return userMapper.getComment(id);
     }
+
+    @Override
+    public List<ChargeRecord> getChargeRecord(Integer id) {
+        return userMapper.getChargeRecord(id);
+    }
+
+    @Override
+    public List<PaymentRecord> getPaymentRecord(Integer id) {
+        return userMapper.getPaymentRecord(id);
+    }
+
 }

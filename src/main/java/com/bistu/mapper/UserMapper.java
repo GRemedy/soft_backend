@@ -45,7 +45,7 @@ public interface UserMapper {
     @Select("select * from transaction where user_id = #{id}")
     List<Transaction> historyData(Integer id);
 
-    @Select("select * from comment where user_id = #{id}")
+    @Select("select id, user_id, product_id, grade,CAST(content AS char ) AS content, create_time, update_time, attitude from comment where user_id = #{id}")
     List<Comment> getComment(Integer id);
 
     @Select("select user_id from sub_merchant where id in (select store_id from product where id = #{id}) ")
@@ -60,4 +60,10 @@ public interface UserMapper {
 
     @Update("update account set point = point - #{point} where user_id = #{id}" )
     void minusPoint(Double point, Integer id);
+
+    @Select("select * from charge_record where user_id =#{id} ")
+    List<ChargeRecord> getChargeRecord(Integer id);
+
+    @Select("select * from payment_record where user_id= #{id}")
+    List<PaymentRecord> getPaymentRecord(Integer id);
 }
