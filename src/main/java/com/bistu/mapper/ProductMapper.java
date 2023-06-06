@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: Gremedy
@@ -16,10 +15,10 @@ import java.util.Map;
 @Mapper
 public interface ProductMapper {
 
-    List<Product> getAll(Map<String,Object> paraMap);
+    List<Product> getAll(GetAllParam getAllParam);
 
-    @Select("SELECT COUNT(*) FROM product")
-    Long getCount(Map<String, Object> paramMap);
+    @Select("select count(*) from product")
+    Long getCount();
 
     void perchase(Transaction transaction);
 

@@ -43,9 +43,9 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public PageBean getAll(Map<String, Object> paraMap) {
-        Long count = productMapper.getCount(paraMap);
-        List<Product> products = productMapper.getAll(paraMap);
+    public PageBean getAll(GetAllParam getAllParam) {
+        Long count = productMapper.getCount();
+        List<Product> products = productMapper.getAll(getAllParam);
         List<DisProduct> disProducts = proToDisProMap.proToDisProMap(products);
         disProducts.forEach(
                 disProduct -> {

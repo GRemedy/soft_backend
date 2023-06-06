@@ -4,9 +4,6 @@ import com.bistu.entity.*;
 import com.bistu.servise.ProductService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @Author: Gremedy
  * @Description: 物品控制器
@@ -22,27 +19,17 @@ public class ProductController {
         this.productService = productService;
     }
 
-    /***
+    /**
     * @author Gremedy
-    * @date 2023/5/26 22:00
-    * @param start , pageSize
+    * @description
+    * @date 2023/6/6 14:58
+    * @param getAllParam 分页参数对象
     * @return Result
     **/
+
     @GetMapping
-    public Result getAll(@RequestParam(defaultValue = "1") Integer start,
-                         @RequestParam(defaultValue = "20")Integer pageSize,
-                        String name,String category,Double price, Integer salesVolume,
-                         String storeName , boolean isDESC) {
-        Map<String,Object> paraMap = new HashMap<>();
-        paraMap.put("start",start);
-        paraMap.put("pageSize",pageSize);
-        paraMap.put("name",name);
-        paraMap.put("category",category);
-        paraMap.put("price",price);
-        paraMap.put("salesVolume",salesVolume);
-        paraMap.put("storeName",storeName);
-        paraMap.put("isDESC",isDESC);
-        PageBean products = productService.getAll(paraMap);
+    public Result getAll(@RequestBody GetAllParam getAllParam) {
+        PageBean products = productService.getAll(getAllParam);
         return Result.success(products);
     }
 
@@ -52,30 +39,17 @@ public class ProductController {
     }
 
     @PutMapping("/perchase")
-    public Result perchase(Integer userId,Integer productId,Integer couponId,Integer quantity){
-        Transaction transaction = new Transaction();
-        transaction.setQuantity(quantity);
-        transaction.setProductId(productId);
-        transaction.setUserId(userId);
+    public Result perchase(@RequestBody Transaction transaction,Integer couponId){
         productService.perchase(transaction,couponId);
         return Result.success("购买成功");
     }
     @PutMapping("/shoppingCart")
-    public Result shoppingCart(Integer userId,Integer productId,Integer quantity){
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setProductId(productId);
-        shoppingCart.setQuantity(quantity);
-        shoppingCart.setUserId(userId);
+    public Result shoppingCart(@RequestBody ShoppingCart shoppingCart){
         productService.shoppingCart(shoppingCart);
         return Result.success("成功添加到购物车");
     }
     @PutMapping("/comment")
-    public Result comment(Integer userId,Integer productId,Integer grade,String content){
-        Comment comment = new Comment();
-        comment.setContent(content);
-        comment.setProductId(productId);
-        comment.setGrade(grade);
-        comment.setUserId(userId);
+    public Result comment(@RequestBody Comment comment){
         productService.comment(comment);
         return Result.success("评论成功");
     }
