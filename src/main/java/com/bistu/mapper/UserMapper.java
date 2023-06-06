@@ -38,7 +38,8 @@ public interface UserMapper {
     Account getAccount(Integer id);
 
     @Update("update account set balance = balance - #{paid} ," +
-            "outcome_time = #{outcomeTime} ,point = point + #{paid}/100 where user_id = #{id}")
+            "outcome_time = #{outcomeTime} ," +
+            "update_time = #{outcomeTime} ,point = point + #{paid} where user_id = #{id}")
     void perchase(Double paid, LocalDateTime outcomeTime, Integer id);
 
     @Select("select * from transaction where user_id = #{id}")
@@ -46,9 +47,17 @@ public interface UserMapper {
 
     @Select("select * from comment where user_id = #{id}")
     List<Comment> getComment(Integer id);
+
     @Select("select user_id from sub_merchant where id in (select store_id from product where id = #{id}) ")
     Integer getUserIdByProductId(Integer id);
+
     @Insert("insert into payment_record (user_id, merchant_id, amount, payment_time) " +
             "VALUES (#{userId},#{merchantId},#{amount},#{paymentTime})")
     void updatePaymentRecord(PaymentRecord paymentRecord);
+
+    @Select("select point from account where user_id = #{id}")
+    Integer getPoint(Integer id);
+
+    @Update("update account set point = point - #{point} where user_id = #{id}" )
+    void minusPoint(Double point, Integer id);
 }

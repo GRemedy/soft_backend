@@ -15,6 +15,7 @@ public class Comment {
     private int productId;
     private int grade;
     private String content;
+    private int attitude;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

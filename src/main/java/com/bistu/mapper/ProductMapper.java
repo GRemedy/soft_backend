@@ -38,7 +38,6 @@ public interface ProductMapper {
 
     void shoppingCart(ShoppingCart shoppingCart);
 
-
     void comment(Comment comment);
     @Update("update product set rating = #{rating} where id = #{id}")
     void updateRating(Double rating , Integer id);
@@ -49,4 +48,5 @@ public interface ProductMapper {
     Integer getGoodComment(Integer id);
     @Select("select grade,content from comment where product_id = #{id}")
     List<Comment> getProductComment(Integer id);
+
 }

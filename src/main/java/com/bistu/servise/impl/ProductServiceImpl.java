@@ -1,13 +1,11 @@
 package com.bistu.servise.impl;
 
-import com.bistu.Enum.TransactionStatus;
 import com.bistu.dis.DisProduct;
 import com.bistu.entity.*;
 import com.bistu.mapper.ProductMapper;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.ProductService;
-import com.bistu.utils.ProToDisProMap;
-import com.bistu.utils.UpdateRating;
+import com.bistu.utils.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,15 +25,20 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final ProToDisProMap proToDisProMap;
     private final UserMapper userMapper;
-
     private final UpdateRating updateRating;
+    private final TransactionUtils transactionUtils;
+    private final CouponUtils couponUtils;
+    private final PointUtils pointUtils;
 
 
-    public ProductServiceImpl(ProductMapper productMapper, ProToDisProMap proToDisProMap, UserMapper userMapper, UpdateRating updateRating) {
+    public ProductServiceImpl(ProductMapper productMapper, ProToDisProMap proToDisProMap, UserMapper userMapper, UpdateRating updateRating, TransactionUtils transactionUtils, CouponUtils couponUtils, PointUtils pointUtils) {
         this.productMapper = productMapper;
         this.proToDisProMap = proToDisProMap;
         this.userMapper = userMapper;
         this.updateRating = updateRating;
+        this.transactionUtils = transactionUtils;
+        this.couponUtils = couponUtils;
+        this.pointUtils = pointUtils;
     }
 
 
@@ -59,40 +62,20 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.getProduct(transaction.getProductId());
         if (transaction.getQuantity() <= product.getQuantity()){
             Account account = userMapper.getAccount(transaction.getUserId());
+            Integer point = userMapper.getPoint(transaction.getUserId());
             if (account.getBalance() >=product.getPrice()){
                 if (couponId != null){
                     Coupon coupon = productMapper.useCoupon(couponId);
-                    double value = coupon.getCouponType().getValue();
-                    if (value > 1){
-                        double paid = product.getPrice() * transaction.getQuantity() - value;
-                        transaction.setPaid(paid);
-                        transaction.setCreateTime(LocalDateTime.now());
-                        transaction.setPaymentTime(LocalDateTime.now());
-                        transaction.setUpdateTime(LocalDateTime.now());
-                        transaction.setDiscount(coupon.getCouponType());
-                        transaction.setStatus(TransactionStatus.WAITING_FOR_SHIPPING);
-                        productMapper.perchase(transaction);
-                        userMapper.perchase(paid,LocalDateTime.now(),transaction.getUserId());
-                        productMapper.updateProduct(transaction);
+                    Map<String, Double> pointed = pointUtils.point(point,
+                            couponUtils.getCoupon(coupon, product.getPrice() * transaction.getQuantity()));
+                    userMapper.minusPoint(pointed.get("point"),transaction.getUserId());
+                    transactionUtils.tra(pointed.get("actualPaid"),transaction,coupon);
                 }
-                }
+
                 else {
-                    double paid = product.getPrice()*transaction.getQuantity();
-                    transaction.setPaid(paid);
-                    transaction.setCreateTime(LocalDateTime.now());
-                    transaction.setPaymentTime(LocalDateTime.now());
-                    transaction.setUpdateTime(LocalDateTime.now());
-                    transaction.setDiscount(null);
-                    transaction.setStatus(TransactionStatus.WAITING_FOR_SHIPPING);
-                    productMapper.perchase(transaction);
-                    userMapper.perchase(paid,LocalDateTime.now(),transaction.getUserId());
-                    PaymentRecord paymentRecord = new PaymentRecord();
-                    paymentRecord.setAmount(paid);
-                    paymentRecord.setPaymentTime(LocalDateTime.now());
-                    paymentRecord.setMerchantId(userMapper.getUserIdByProductId(transaction.getProductId()));
-                    paymentRecord.setUserId(transaction.getUserId());
-                    userMapper.updatePaymentRecord(paymentRecord);
-                    productMapper.updateProduct(transaction);
+                    Map<String, Double> pointed = pointUtils.point(point,product.getPrice() * transaction.getQuantity());
+                    userMapper.minusPoint(pointed.get("point"),transaction.getUserId());
+                    transactionUtils.tra(pointed.get("actualPaid"),transaction, null);
                 }
             }
         }
