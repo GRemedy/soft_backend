@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void perchase(Transaction transaction ,Integer couponId) {
         Product product = productMapper.getProduct(transaction.getProductId());
-        if (transaction.getQuantity() <= product.getQuantity()){
+        if (transaction.getQuantity() <= product.getQuantity() ){
             Account account = userMapper.getAccount(transaction.getUserId());
             Integer point = userMapper.getPoint(transaction.getUserId());
             if (account.getBalance() >=product.getPrice()){

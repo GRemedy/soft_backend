@@ -4,12 +4,10 @@ import com.bistu.Enum.CouponType;
 import com.bistu.Enum.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Transaction {
     private int id;
@@ -24,4 +22,7 @@ public class Transaction {
     private LocalDateTime deliveryTime;
     private LocalDateTime dealTime;
     private LocalDateTime updateTime;
+    public Transaction(){
+        this.quantity = 1;
+    }
 }
