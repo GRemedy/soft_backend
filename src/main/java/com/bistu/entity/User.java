@@ -24,7 +24,7 @@ public class User {
     private String email;
     private String bankCardNumber;
     private Identity identity;
-    private String avatar;
+    private String image;
     private String selfIntroduction;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

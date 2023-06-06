@@ -42,7 +42,12 @@ public class ProductServiceImpl implements ProductService {
         Long count = productMapper.getCount(paraMap);
         List<Product> products = productMapper.getAll(paraMap);
         List<DisProduct> disProducts = proToDisProMap.proToDisProMap(products);
-
+        disProducts.forEach(
+                disProduct -> {
+                    List<Comment> comments = productMapper.getProductComment(disProduct.getId());
+                    disProduct.setComments(comments);
+                }
+        );
         return new PageBean(count, disProducts);
     }
 
@@ -79,6 +84,12 @@ public class ProductServiceImpl implements ProductService {
                     transaction.setStatus(TransactionStatus.WAITING_FOR_SHIPPING);
                     productMapper.perchase(transaction);
                     userMapper.perchase(paid,LocalDateTime.now(),transaction.getUserId());
+                    PaymentRecord paymentRecord = new PaymentRecord();
+                    paymentRecord.setAmount(paid);
+                    paymentRecord.setPaymentTime(LocalDateTime.now());
+                    paymentRecord.setMerchantId(userMapper.getUserIdByProductId(transaction.getProductId()));
+                    paymentRecord.setUserId(transaction.getUserId());
+                    userMapper.updatePaymentRecord(paymentRecord);
                     productMapper.updateProduct(transaction);
                 }
             }

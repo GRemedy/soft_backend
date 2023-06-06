@@ -1,6 +1,7 @@
 package com.bistu.mapper;
 
 import com.bistu.entity.*;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -36,7 +37,8 @@ public interface UserMapper {
     @Select("select * from account where user_id = #{id}")
     Account getAccount(Integer id);
 
-    @Update("update account set balance = balance - #{paid} ,outcome_time = #{outcomeTime} where user_id = #{id}")
+    @Update("update account set balance = balance - #{paid} ," +
+            "outcome_time = #{outcomeTime} ,point = point + #{paid}/100 where user_id = #{id}")
     void perchase(Double paid, LocalDateTime outcomeTime, Integer id);
 
     @Select("select * from transaction where user_id = #{id}")
@@ -44,4 +46,9 @@ public interface UserMapper {
 
     @Select("select * from comment where user_id = #{id}")
     List<Comment> getComment(Integer id);
+    @Select("select user_id from sub_merchant where id in (select store_id from product where id = #{id}) ")
+    Integer getUserIdByProductId(Integer id);
+    @Insert("insert into payment_record (user_id, merchant_id, amount, payment_time) " +
+            "VALUES (#{userId},#{merchantId},#{amount},#{paymentTime})")
+    void updatePaymentRecord(PaymentRecord paymentRecord);
 }

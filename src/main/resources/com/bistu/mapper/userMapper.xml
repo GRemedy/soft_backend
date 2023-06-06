@@ -33,8 +33,8 @@
         <if test="address != null">
             address = #{address},
         </if>
-        <if test="avatar != null">
-            avatar = #{avatar},
+        <if test="image != null">
+            image = #{image},
         </if>
         <if test="selfIntroduction != null">
             self_introduction = #{selfIntroduction},
