@@ -47,6 +47,6 @@ public interface ProductMapper {
 
     @Select("select count(*) from comment where grade >= 4 and product_id = #{id}")
     Integer getGoodComment(Integer id);
-    @Select("select * from comment where product_id = #{id}")
+    @Select("select grade,content from comment where product_id = #{id}")
     List<Comment> getProductComment(Integer id);
 }

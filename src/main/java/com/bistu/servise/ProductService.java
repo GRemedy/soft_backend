@@ -1,6 +1,9 @@
 package com.bistu.servise;
 
-import com.bistu.entity.*;
+import com.bistu.entity.Comment;
+import com.bistu.entity.PageBean;
+import com.bistu.entity.ShoppingCart;
+import com.bistu.entity.Transaction;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +18,7 @@ public interface ProductService {
     PageBean getAll(Map<String,Object> paraMap);
 
 
-    List<Coupon> prePerchase(Integer id);
+    Map<String, List<Object>> prePerchase(Transaction transaction);
 
     void perchase(Transaction transaction, Integer couponId);
 

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -113,7 +115,14 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<Coupon> prePerchase(Integer id) {
-        return productMapper.getCoupon(id);
+    public Map<String,List<Object>> prePerchase(Transaction transaction) {
+        List<Coupon> coupons = productMapper.getCoupon(transaction.getUserId());
+        List<Comment> comments = productMapper.getProductComment(transaction.getProductId());
+        Product product = productMapper.getProduct(transaction.getProductId());
+        Map<String,List<Object>> prePerchase = new HashMap<>();
+        prePerchase.put("coupons", Collections.singletonList(coupons));
+        prePerchase.put("comments", Collections.singletonList(comments));
+        prePerchase.put("perchaseMethod", Collections.singletonList(product.getPurchaseMethod()));
+        return prePerchase;
     }
 }

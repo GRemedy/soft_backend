@@ -47,8 +47,8 @@ public class ProductController {
     }
 
     @GetMapping("/prePerchase")
-    public Result prePerchase(Integer id){
-        return Result.success(productService.prePerchase(id));
+    public Result prePerchase(@RequestBody Transaction transaction){
+       return Result.success(productService.prePerchase(transaction));
     }
 
     @PutMapping("/perchase")
