@@ -27,7 +27,7 @@ public class ProductController {
     * @return Result
     **/
 
-    @GetMapping
+    @GetMapping("/getAll")
     public Result getAll(@RequestBody GetAllParam getAllParam) {
         PageBean products = productService.getAll(getAllParam);
         return Result.success(products);
