@@ -106,6 +106,9 @@ public class ProductServiceImpl implements ProductService {
         product.setUpdateTime(LocalDateTime.now());
         product.setStatus(ProductStatus.REVIEWING);
         product.setQuantity(1);
+        if (product.getNegotiable()==null){
+            product.setNegotiable(true);
+        }
         productMapper.shelves(product);
 
     }

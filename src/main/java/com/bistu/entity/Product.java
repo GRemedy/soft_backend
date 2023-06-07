@@ -21,13 +21,13 @@ public class Product {
     private String description;
     private Double price;
     private String image;
-    private boolean negotiable;
+    private Boolean negotiable;
     private PurchaseMethod purchaseMethod;
-    private int quantity;
-    private int salesVolume;
+    private Integer quantity;
+    private Integer salesVolume;
     private DamageLevel damageLevel;
     private ProductStatus status;
-    private double rating;
+    private Double rating;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
