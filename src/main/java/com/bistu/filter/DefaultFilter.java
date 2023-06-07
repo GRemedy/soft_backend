@@ -36,7 +36,7 @@ public class DefaultFilter implements Filter {
 
         //判断token是否为空
         if(!StringUtils.hasLength(jwt)){
-            Result error = new Result(0,"NOT_LOGIN",null);
+            Result error = new Result("0","NOT_LOGIN",null);
             String result = JSONObject.toJSONString(error);
             resp.getWriter().write(result);
             return;
@@ -46,7 +46,7 @@ public class DefaultFilter implements Filter {
         try {
             JWTUtils.JWTParse(jwt);
         } catch (Exception e) {
-            Result error = new Result(0,"NOT_LOGIN",null);
+            Result error = new Result("0","NOT_LOGIN",null);
             String result = JSONObject.toJSONString(error);
             resp.getWriter().write(result);
             return;

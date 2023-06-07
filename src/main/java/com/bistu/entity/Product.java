@@ -19,7 +19,7 @@ public class Product {
     private String category;
     private String size;
     private String description;
-    private double price;
+    private Double price;
     private String image;
     private boolean negotiable;
     private PurchaseMethod purchaseMethod;
