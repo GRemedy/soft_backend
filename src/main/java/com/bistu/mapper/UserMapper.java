@@ -73,5 +73,9 @@ public interface UserMapper {
    @Update("update account set balance = balance + #{amount} , income_time = #{chargeTime},update_time = #{chargeTime}")
    void chargeAccount(ChargeRecord chargeRecord);
 
+   @Select("select * from product where status = 'REVIEWING' ")
+   List<Product> getReviewProduct();
 
+   @Update("update product set status = 'SELLING' where id in #{ids}")
+   void reviewing(List<Integer> ids);
 }

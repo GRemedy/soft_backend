@@ -106,4 +106,8 @@ public interface UserService {
     List<PaymentRecord> getPaymentRecord(Integer id);
 
     void charge(ChargeRecord chargeRecord);
+
+    List<DisProduct> getReviewProduct();
+
+    void review(List<Integer> ids);
 }

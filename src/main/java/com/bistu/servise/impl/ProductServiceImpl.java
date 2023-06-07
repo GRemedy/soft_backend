@@ -1,6 +1,7 @@
 package com.bistu.servise.impl;
 
 import com.bistu.Enum.ProductStatus;
+import com.bistu.Enum.PurchaseMethod;
 import com.bistu.dis.DisProduct;
 import com.bistu.entity.*;
 import com.bistu.mapper.ProductMapper;
@@ -98,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * @param product
+     * @param product 商品对象
      */
     @Override
     public void shelves(Product product) {
@@ -106,6 +107,7 @@ public class ProductServiceImpl implements ProductService {
         product.setUpdateTime(LocalDateTime.now());
         product.setStatus(ProductStatus.REVIEWING);
         product.setQuantity(1);
+        product.setPurchaseMethod(PurchaseMethod.Online);
         if (product.getNegotiable()==null){
             product.setNegotiable(true);
         }

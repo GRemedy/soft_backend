@@ -1,5 +1,6 @@
 package com.bistu.controller;
 
+import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
 import com.bistu.entity.Account;
 import com.bistu.entity.ChargeRecord;
@@ -74,5 +75,17 @@ public class UserController {
     public Result charge(ChargeRecord chargeRecord){
         userService.charge(chargeRecord);
         return Result.success("充值成功");
+    }
+
+    @GetMapping("/getReviewProduct")
+    public Result getReviewProduct(){
+        List<DisProduct> disProductList = userService.getReviewProduct();
+        return Result.success(disProductList);
+    }
+
+    @PutMapping("review")
+    public Result review(List<Integer> ids){
+        userService.review(ids);
+        return Result.success();
     }
 }

@@ -163,4 +163,18 @@ public class UserServiceImpl implements UserService {
         userMapper.charge(chargeRecord);
     }
 
+    /**
+     * @return
+     */
+    @Override
+    public List<DisProduct> getReviewProduct() {
+        List<Product> products = userMapper.getReviewProduct();
+        return proToDisProMap.proToDisProMap(products);
+    }
+
+    @Override
+    public void review(List<Integer> ids){
+        userMapper.reviewing(ids);
+    }
+
 }
