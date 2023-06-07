@@ -1,5 +1,6 @@
 package com.bistu.servise.impl;
 
+import com.bistu.Enum.ProductStatus;
 import com.bistu.dis.DisProduct;
 import com.bistu.entity.*;
 import com.bistu.mapper.ProductMapper;
@@ -94,6 +95,19 @@ public class ProductServiceImpl implements ProductService {
         comment.setUpdateTime(LocalDateTime.now());
         productMapper.comment(comment);
         updateRating.updateRate(comment.getProductId());
+    }
+
+    /**
+     * @param product
+     */
+    @Override
+    public void shelves(Product product) {
+        product.setCreateTime(LocalDateTime.now());
+        product.setUpdateTime(LocalDateTime.now());
+        product.setStatus(ProductStatus.REVIEWING);
+        product.setQuantity(1);
+        productMapper.shelves(product);
+
     }
 
 

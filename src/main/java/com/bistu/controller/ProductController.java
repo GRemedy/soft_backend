@@ -2,6 +2,7 @@ package com.bistu.controller;
 
 import com.bistu.entity.*;
 import com.bistu.servise.ProductService;
+import com.bistu.utils.ExceptionUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/product")
 public class ProductController {
     private final ProductService productService;
+    private final ExceptionUtils exceptionUtils;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ExceptionUtils exceptionUtils) {
         this.productService = productService;
+        this.exceptionUtils = exceptionUtils;
     }
 
     /**
@@ -27,13 +30,20 @@ public class ProductController {
     * @return Result
     **/
 
-    @GetMapping("/getAll")
+    @PostMapping("/getAll")
     public Result getAll(@RequestBody GetAllParam getAllParam) {
+        if (getAllParam == null){
+            GetAllParam getAllParam1 = new GetAllParam();
+            getAllParam1.setStart(1);
+            getAllParam1.setPageSize(20);
+            PageBean products = productService.getAll(getAllParam1);
+            return Result.success(products);
+        }
         PageBean products = productService.getAll(getAllParam);
         return Result.success(products);
     }
 
-    @GetMapping("/prePerchase")
+    @PostMapping("/prePerchase")
     public Result prePerchase(@RequestBody Transaction transaction){
        return Result.success(productService.prePerchase(transaction));
     }
@@ -52,5 +62,12 @@ public class ProductController {
     public Result comment(@RequestBody Comment comment){
         productService.comment(comment);
         return Result.success("评论成功");
+    }
+
+    @PutMapping("/shelves")
+    public Result shelves(Product product){
+        exceptionUtils.throwException(product);
+        productService.shelves(product);
+        return Result.success();
     }
 }

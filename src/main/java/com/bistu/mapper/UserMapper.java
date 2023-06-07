@@ -24,7 +24,7 @@ public interface UserMapper {
     @Update("update user set state = 1 where id in #{id}")
     void audit(List<Integer> id);
 
-    @Update("update user set identity = 'Merchant' where id = #{id}")
+    @Update("update user set identity = 'Merchant' , state = 0  where id = #{id}")
     void registerMerchant(Integer id);
 
     void buildSubMerchant(SubMerchant subMerchant);
@@ -72,4 +72,6 @@ public interface UserMapper {
     void charge(ChargeRecord chargeRecord);
    @Update("update account set balance = balance + #{amount} , income_time = #{chargeTime},update_time = #{chargeTime}")
    void chargeAccount(ChargeRecord chargeRecord);
+
+
 }

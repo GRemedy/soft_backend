@@ -73,4 +73,10 @@
         values(#{userId},#{productId},#{grade},#{content},#{createTime},#{updateTime},#{attitude})
     </insert>
 
+    <insert id="shelves" parameterType="com.bistu.entity.Product">
+        insert into product(store_id,name,category,size,description,price,image,negotiable,
+        purchase_method,quantity,damage_level,rating,create_time,update_time)
+        values(#{storeId},#{name},#{category},#{size},#{description},#{price},#{image},#{negotiable},
+        #{purchaseMethod},#{quantity},#{damageLevel},#{rating},#{createTime},#{updateTime})
+    </insert>
 </mapper>

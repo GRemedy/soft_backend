@@ -48,4 +48,6 @@ public interface ProductMapper {
     @Select("select grade,content from comment where product_id = #{id}")
     List<Comment> getProductComment(Integer id);
 
+
+    void shelves(Product product);
 }

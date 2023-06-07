@@ -22,4 +22,6 @@ public interface ProductService {
     void shoppingCart(ShoppingCart shoppingCart);
 
     void comment(Comment comment);
+
+    void shelves(Product product);
 }
