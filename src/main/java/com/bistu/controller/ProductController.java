@@ -5,6 +5,8 @@ import com.bistu.servise.ProductService;
 import com.bistu.utils.ExceptionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author: Gremedy
  * @Description: 物品控制器
@@ -68,6 +70,12 @@ public class ProductController {
     public Result shelves(Product product){
         exceptionUtils.throwException(product);
         productService.shelves(product);
-        return Result.success();
+        return Result.success("上架商品成功，请等待管理员审核");
+    }
+
+    @PutMapping("/offShelves")
+    public Result offShelves(List<Integer> ids){
+        productService.offShelves(ids);
+        return Result.success("下架商品成功");
     }
 }

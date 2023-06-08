@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public interface ProductMapper {
 
     List<Product> getAll(GetAllParam getAllParam);
 
-    @Select("select count(*) from product")
+    @Select("select count(*) from product where status != 'REVIEWING'")
     Long getCount();
 
     void perchase(Transaction transaction);
@@ -50,4 +51,6 @@ public interface ProductMapper {
 
 
     void shelves(Product product);
+
+    void offShelves(String ids, LocalDateTime updateTime);
 }

@@ -24,4 +24,6 @@ public interface ProductService {
     void comment(Comment comment);
 
     void shelves(Product product);
+
+    void offShelves(List<Integer> ids);
 }

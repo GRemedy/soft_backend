@@ -18,6 +18,7 @@
                 )
             </if>
         </where>
+        where status != 'REVIEWING'
         <if test="price != null or salesVolume != null or rating != null">
             ORDER BY
             <choose>
@@ -79,4 +80,8 @@
         values(#{storeId},#{name},#{category},#{size},#{description},#{price},#{image},#{negotiable},
         #{purchaseMethod},#{quantity},#{damageLevel},#{rating},#{createTime},#{updateTime})
     </insert>
+
+    <update id="offShelves" parameterType="string">
+        update product set status = 'REVIEWING' , update_time = #{updateTime} where id in ${ids}
+    </update>
 </mapper>

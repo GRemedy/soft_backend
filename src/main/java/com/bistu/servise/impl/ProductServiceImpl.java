@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Gremedy
@@ -113,6 +114,18 @@ public class ProductServiceImpl implements ProductService {
         }
         productMapper.shelves(product);
 
+    }
+
+    /**
+     * @param ids 下架商品的Id
+     */
+    @Override
+    public void offShelves(List<Integer> ids) {
+        String idString = ids.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+        String idsString = "(" + idString + ")";
+        productMapper.offShelves(idsString,LocalDateTime.now());
     }
 
 
