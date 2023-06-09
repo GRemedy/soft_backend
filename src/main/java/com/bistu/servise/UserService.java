@@ -111,7 +111,8 @@ public interface UserService {
 
     void review(List<Integer> ids);
 
-    Integer getRank(Integer id);
 
     void pay(Transaction transaction);
+
+    void updateRank(Integer id ,Integer rank);
 }

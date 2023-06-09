@@ -86,8 +86,14 @@ public class UserController {
         return Result.success();
     }
 
+    @PutMapping("/pay")
     public Result pay(@RequestBody Transaction transaction){
         userService.pay(transaction);
         return Result.success("收货成功，已将货款发给商家");
+    }
+    @PutMapping("updateRank")
+    public Result updateRank(Integer id ,Integer rank){
+        userService.updateRank(id, rank);
+        return Result.success("商家等级已调整");
     }
 }

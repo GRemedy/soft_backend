@@ -181,10 +181,6 @@ public class UserServiceImpl implements UserService {
         userMapper.reviewing(ids);
     }
 
-    @Override
-    public Integer getRank(Integer id) {
-        return userMapper.getRank(id);
-    }
 
     @Override
     public void pay(Transaction transaction){
@@ -195,5 +191,10 @@ public class UserServiceImpl implements UserService {
         transaction.setStatus(TransactionStatus.RECEIVED);
         userMapper.updateTransaction(transaction);
         userMapper.pay(transaction);
+    }
+
+    @Override
+    public void updateRank(Integer id, Integer rank) {
+        userMapper.updateRank(id,rank);
     }
 }

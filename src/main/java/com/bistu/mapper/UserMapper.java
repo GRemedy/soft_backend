@@ -85,4 +85,7 @@ public interface UserMapper {
    void updateTransaction(Transaction transaction);
    @Select("select store_rank from sub_merchant where user_id = #{id}")
    Integer getRank(Integer id);
+
+   @Update("update sub_merchant set store_rank = #{rank} where user_id = #{id}")
+   void updateRank(Integer id ,Integer rank);
 }
