@@ -78,4 +78,10 @@ public class ProductController {
         productService.offShelves(ids);
         return Result.success("下架商品成功");
     }
+
+    @PutMapping("/delivery")
+    public Result delivery(@RequestBody Transaction transaction){
+        productService.delivery(transaction);
+        return Result.success();
+    }
 }

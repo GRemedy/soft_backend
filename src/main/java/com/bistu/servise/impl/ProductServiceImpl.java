@@ -2,6 +2,7 @@ package com.bistu.servise.impl;
 
 import com.bistu.Enum.ProductStatus;
 import com.bistu.Enum.PurchaseMethod;
+import com.bistu.Enum.TransactionStatus;
 import com.bistu.dis.DisProduct;
 import com.bistu.entity.*;
 import com.bistu.mapper.ProductMapper;
@@ -126,6 +127,14 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.joining(","));
         String idsString = "(" + idString + ")";
         productMapper.offShelves(idsString,LocalDateTime.now());
+    }
+
+    @Override
+    public void delivery(Transaction transaction) {
+        transaction.setDeliveryTime(LocalDateTime.now());
+        transaction.setStatus(TransactionStatus.SHIPPED);
+        transaction.setUpdateTime(LocalDateTime.now());
+        productMapper.delivery(transaction);
     }
 
 

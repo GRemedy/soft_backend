@@ -46,4 +46,7 @@
         where id = #{id}
     </update>
 
+    <update id="pay" parameterType="com.bistu.entity.Transaction">
+        update account set balance = balance + #{paid} ,
+    </update>
 </mapper>

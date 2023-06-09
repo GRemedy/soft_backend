@@ -26,4 +26,6 @@ public interface ProductService {
     void shelves(Product product);
 
     void offShelves(List<Integer> ids);
+
+    void delivery(Transaction transaction);
 }
