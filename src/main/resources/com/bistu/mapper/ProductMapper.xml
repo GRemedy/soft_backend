@@ -6,15 +6,15 @@
     <select id="getAll" parameterType="com.bistu.entity.GetAllParam" resultType="com.bistu.entity.Product">
         SELECT * FROM product
         <where>
-            <if test="name != null">
-                AND name LIKE CONCAT('%', #{name}, '%')
+            <if test="name != '%null%'">
+                AND name LIKE #{name}
             </if>
-            <if test="category != null">
-                AND category LIKE CONCAT('%', #{category}, '%')
+            <if test="category != '%null%'">
+                AND category  #{category}
             </if>
-            <if test="storeName != null">
+            <if test="storeName != '%null%'">
                 AND store_id IN (
-                SELECT id FROM sub_merchant WHERE store_name LIKE CONCAT('%', #{storeName}, '%')
+                SELECT id FROM sub_merchant WHERE store_name LIKE #{storeName}
                 )
             </if>
             and status != 'REVIEWING'

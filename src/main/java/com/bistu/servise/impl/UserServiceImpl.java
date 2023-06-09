@@ -7,10 +7,7 @@ import com.bistu.dis.DisUser;
 import com.bistu.entity.*;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.UserService;
-import com.bistu.utils.MerchantFeeUtils;
-import com.bistu.utils.ProToDisProMap;
-import com.bistu.utils.TransToProductMap;
-import com.bistu.utils.UserToDisUserMap;
+import com.bistu.utils.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,14 +29,16 @@ public class UserServiceImpl implements UserService {
     private final ProToDisProMap proToDisProMap;
     private final TransToProductMap transToProductMap;
     private final MerchantFeeUtils merchantFeeUtils;
+    private final RefundUtils refundUtils;
 
 
-    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap, MerchantFeeUtils merchantFeeUtils) {
+    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap, MerchantFeeUtils merchantFeeUtils, RefundUtils refundUtils) {
         this.userMapper = userMapper;
         this.userToDisUserMap = userToDisUserMap;
         this.proToDisProMap = proToDisProMap;
         this.transToProductMap = transToProductMap;
         this.merchantFeeUtils = merchantFeeUtils;
+        this.refundUtils = refundUtils;
     }
 
     @Override
@@ -196,5 +195,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateRank(Integer id, Integer rank) {
         userMapper.updateRank(id,rank);
+    }
+
+    @Override
+    public void refunding(SubTrade subTrade){
+        subTrade.setReturnTime(LocalDateTime.now());
+        subTrade.setSuccess(0);
+        userMapper.refunding(subTrade);
+        userMapper.refund(subTrade.getTransactionId());
+    }
+
+    @Override
+    public void dealRefund(SubTrade subTrade){
+        Transaction transaction = new Transaction();
+        transaction.setId(subTrade.getTransactionId());
+        transaction.setDealTime(LocalDateTime.now());
+        transaction.setUpdateTime(LocalDateTime.now());
+        TransactionStatus status = refundUtils.getStatus(subTrade.getSuccess());
+        transaction.setStatus(status);
+        subTrade.setDealTime(LocalDateTime.now());
+        userMapper.dealRefunding(subTrade);
+        userMapper.dealRefund(transaction);
     }
 }

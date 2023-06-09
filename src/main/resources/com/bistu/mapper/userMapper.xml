@@ -50,4 +50,13 @@
         update account set balance = balance + #{paid} , update_time = #{updateTime}
         where user_id in (select user_id from sub_merchant where id  in (select store_id from product where id = #{productId}))
     </update>
+
+    <insert id="refunding" parameterType="com.bistu.entity.SubTrade">
+        insert into sub_trade (transaction_id,reason,return_time)
+        values(#{transactionId},#{reason},#{returnTime})
+    </insert>
+
+    <update id="dealRefunding" parameterType="com.bistu.entity.SubTrade">
+        update sub_trade set success = #{success} ,deal_time = #{dealTime} where id = #{id}
+    </update>
 </mapper>

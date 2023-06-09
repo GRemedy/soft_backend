@@ -96,4 +96,16 @@ public class UserController {
         userService.updateRank(id, rank);
         return Result.success("商家等级已调整");
     }
+
+    @PutMapping("/refund")
+    public Result refunding(@RequestBody SubTrade subTrade){
+        userService.refunding(subTrade);
+        return Result.success("申请成功，请等待店家回复");
+    }
+
+    @PutMapping("/dealRefund")
+    public Result dealRefund(@RequestBody SubTrade subTrade){
+        userService.dealRefund(subTrade);
+        return Result.success("处理成功");
+    }
 }

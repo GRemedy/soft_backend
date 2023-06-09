@@ -88,4 +88,16 @@ public interface UserMapper {
 
    @Update("update sub_merchant set store_rank = #{rank} where user_id = #{id}")
    void updateRank(Integer id ,Integer rank);
+
+    void refunding(SubTrade subTrade);
+
+    @Update("update transaction set status = 'REFUNDING',update_time = now() where id = #{id}")
+    void refund(Integer id);
+
+
+    void dealRefunding(SubTrade subTrade);
+
+    @Update("update transaction set status = #{status}, " +
+            "deal_time = #{dealTime},update_time=#{updateTime} where id = #{id}")
+    void dealRefund(Transaction transaction);
 }

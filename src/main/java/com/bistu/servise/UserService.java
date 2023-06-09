@@ -115,4 +115,8 @@ public interface UserService {
     void pay(Transaction transaction);
 
     void updateRank(Integer id ,Integer rank);
+
+    void refunding(SubTrade subTrade);
+
+    void dealRefund(SubTrade subTrade);
 }
