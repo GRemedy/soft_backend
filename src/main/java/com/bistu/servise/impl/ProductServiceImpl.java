@@ -93,8 +93,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void shoppingCart(Integer id,List<Integer> ids) {
-        List<ShoppingCart> shoppingCarts = shoppingCartUtils.shoppingCartUtils(id, ids);
+    public void shoppingCart(Integer id,List<Integer> ids ,List<Integer> quantity) {
+        List<ShoppingCart> shoppingCarts = shoppingCartUtils.shoppingCartUtils(id, ids,quantity);
         productMapper.shoppingCart(shoppingCarts);
 
     }

@@ -5,6 +5,7 @@ import com.bistu.Enum.TransactionStatus;
 import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
 import com.bistu.entity.*;
+import com.bistu.exception.DefaultException;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.UserService;
 import com.bistu.utils.*;
@@ -31,14 +32,17 @@ public class UserServiceImpl implements UserService {
     private final MerchantFeeUtils merchantFeeUtils;
     private final RefundUtils refundUtils;
 
+    private final TimeUtils timeUtils;
 
-    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap, MerchantFeeUtils merchantFeeUtils, RefundUtils refundUtils) {
+
+    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap, MerchantFeeUtils merchantFeeUtils, RefundUtils refundUtils, TimeUtils timeUtils) {
         this.userMapper = userMapper;
         this.userToDisUserMap = userToDisUserMap;
         this.proToDisProMap = proToDisProMap;
         this.transToProductMap = transToProductMap;
         this.merchantFeeUtils = merchantFeeUtils;
         this.refundUtils = refundUtils;
+        this.timeUtils = timeUtils;
     }
 
     @Override
@@ -199,10 +203,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void refunding(SubTrade subTrade){
-        subTrade.setReturnTime(LocalDateTime.now());
-        subTrade.setSuccess(0);
-        userMapper.refunding(subTrade);
-        userMapper.refund(subTrade.getTransactionId());
+        Transaction transaction = userMapper.getUpdateTime(subTrade.getTransactionId());
+        Boolean expressed = timeUtils.express24Hours(transaction.getUpdateTime(), LocalDateTime.now());
+        if (expressed && transaction.getStatus() == TransactionStatus.RECEIVED){
+            throw new DefaultException("0","超过24小时不能申请退款");
+        }
+       else {
+            subTrade.setReturnTime(LocalDateTime.now());
+            subTrade.setSuccess(0);
+            userMapper.refunding(subTrade);
+            userMapper.refund(subTrade.getTransactionId());
+        }
     }
 
     @Override

@@ -100,4 +100,9 @@ public interface UserMapper {
     @Update("update transaction set status = #{status}, " +
             "deal_time = #{dealTime},update_time=#{updateTime} where id = #{id}")
     void dealRefund(Transaction transaction);
+
+    @Select("select * from transaction where id = #{id}")
+    Transaction getUpdateTime(Integer id);
+
+
 }
