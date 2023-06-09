@@ -110,4 +110,8 @@ public interface UserService {
     List<DisProduct> getReviewProduct();
 
     void review(List<Integer> ids);
+
+    Integer getRank(Integer id);
+
+    void pay(Transaction transaction);
 }

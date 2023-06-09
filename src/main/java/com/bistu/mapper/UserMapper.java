@@ -80,4 +80,9 @@ public interface UserMapper {
    void reviewing(List<Integer> ids);
 
    void pay(Transaction transaction);
+
+   @Update("update transaction set status = 'RECEIVED' where id = #{id}")
+   void updateTransaction(Transaction transaction);
+   @Select("select store_rank from sub_merchant where user_id = #{id}")
+   Integer getRank(Integer id);
 }

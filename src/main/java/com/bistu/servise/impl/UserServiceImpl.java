@@ -1,11 +1,13 @@
 package com.bistu.servise.impl;
 
 import com.bistu.Enum.Identity;
+import com.bistu.Enum.TransactionStatus;
 import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
 import com.bistu.entity.*;
 import com.bistu.mapper.UserMapper;
 import com.bistu.servise.UserService;
+import com.bistu.utils.MerchantFeeUtils;
 import com.bistu.utils.ProToDisProMap;
 import com.bistu.utils.TransToProductMap;
 import com.bistu.utils.UserToDisUserMap;
@@ -29,13 +31,15 @@ public class UserServiceImpl implements UserService {
 
     private final ProToDisProMap proToDisProMap;
     private final TransToProductMap transToProductMap;
+    private final MerchantFeeUtils merchantFeeUtils;
 
 
-    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap) {
+    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap, MerchantFeeUtils merchantFeeUtils) {
         this.userMapper = userMapper;
         this.userToDisUserMap = userToDisUserMap;
         this.proToDisProMap = proToDisProMap;
         this.transToProductMap = transToProductMap;
+        this.merchantFeeUtils = merchantFeeUtils;
     }
 
     @Override
@@ -93,11 +97,11 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-    * @author Gremedy
-    * @date 2023/6/4 20:51
-    * @param id   用户id
-    * @return List<DisProduct>
-    **/
+     * @param id 用户id
+     * @return List<DisProduct>
+     * @author Gremedy
+     * @date 2023/6/4 20:51
+     **/
 
     @Override
     public List<DisProduct> historyData(Integer id) {
@@ -164,7 +168,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * @return
+     * @return 返回待审核的商品列表
      */
     @Override
     public List<DisProduct> getReviewProduct() {
@@ -173,8 +177,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void review(List<Integer> ids){
+    public void review(List<Integer> ids) {
         userMapper.reviewing(ids);
     }
 
+    @Override
+    public Integer getRank(Integer id) {
+        return userMapper.getRank(id);
+    }
+
+    @Override
+    public void pay(Transaction transaction){
+        Integer rank = userMapper.getRank(transaction.getUserId());
+        Double fee = merchantFeeUtils.getFee(transaction, rank);
+        transaction.setPaid(transaction.getPaid()-fee);
+        transaction.setUpdateTime(LocalDateTime.now());
+        transaction.setStatus(TransactionStatus.RECEIVED);
+        userMapper.updateTransaction(transaction);
+        userMapper.pay(transaction);
+    }
 }

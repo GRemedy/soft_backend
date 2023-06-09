@@ -2,10 +2,7 @@ package com.bistu.controller;
 
 import com.bistu.dis.DisProduct;
 import com.bistu.dis.DisUser;
-import com.bistu.entity.Account;
-import com.bistu.entity.ChargeRecord;
-import com.bistu.entity.Result;
-import com.bistu.entity.User;
+import com.bistu.entity.*;
 import com.bistu.servise.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,5 +84,10 @@ public class UserController {
     public Result review(List<Integer> ids){
         userService.review(ids);
         return Result.success();
+    }
+
+    public Result pay(@RequestBody Transaction transaction){
+        userService.pay(transaction);
+        return Result.success("收货成功，已将货款发给商家");
     }
 }

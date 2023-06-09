@@ -47,6 +47,7 @@
     </update>
 
     <update id="pay" parameterType="com.bistu.entity.Transaction">
-        update account set balance = balance + #{paid} ,
+        update account set balance = balance + #{paid} , update_time = #{updateTime}
+        where user_id in (select user_id from sub_merchant where id  in (select store_id from product where id = #{productId}))
     </update>
 </mapper>

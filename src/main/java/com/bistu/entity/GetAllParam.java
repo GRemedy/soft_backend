@@ -16,7 +16,7 @@ public class GetAllParam {
    private String name;
    private String category;
    private Double price;
-   private int salesVolume;
+   private Integer salesVolume;
    private String storeName ;
    private Double rating;
    boolean isDESC;
