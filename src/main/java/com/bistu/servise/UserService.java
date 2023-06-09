@@ -119,4 +119,6 @@ public interface UserService {
     void refunding(SubTrade subTrade);
 
     void dealRefund(SubTrade subTrade);
+
+    List<SubTrade> getSubTrade(Integer id);
 }

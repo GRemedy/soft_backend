@@ -108,4 +108,10 @@ public class UserController {
         userService.dealRefund(subTrade);
         return Result.success("处理成功");
     }
+
+    @GetMapping("/getSubTrade")
+    public Result getSubTrade(Integer id){
+        List<SubTrade> subTrade = userService.getSubTrade(id);
+        return Result.success(subTrade);
+    }
 }

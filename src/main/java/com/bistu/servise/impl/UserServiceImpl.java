@@ -225,7 +225,15 @@ public class UserServiceImpl implements UserService {
         TransactionStatus status = refundUtils.getStatus(subTrade.getSuccess());
         transaction.setStatus(status);
         subTrade.setDealTime(LocalDateTime.now());
+        if (subTrade.getSuccess() != 1){
+            subTrade.setRejectReason("");
+        }
         userMapper.dealRefunding(subTrade);
         userMapper.dealRefund(transaction);
+    }
+
+    @Override
+    public List<SubTrade> getSubTrade(Integer id){
+        return userMapper.getSubTrade(id);
     }
 }

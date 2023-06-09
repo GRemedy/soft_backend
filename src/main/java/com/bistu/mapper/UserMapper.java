@@ -104,5 +104,6 @@ public interface UserMapper {
     @Select("select * from transaction where id = #{id}")
     Transaction getUpdateTime(Integer id);
 
-
+    @Select("select * from sub_trade where user_id = #{id}")
+    List<SubTrade> getSubTrade(Integer id);
 }

@@ -57,6 +57,7 @@
     </insert>
 
     <update id="dealRefunding" parameterType="com.bistu.entity.SubTrade">
-        update sub_trade set success = #{success} ,deal_time = #{dealTime} where id = #{id}
+        update sub_trade set success = #{success} ,
+        deal_time = #{dealTime} , reject_reason = #{rejectReason} where id = #{id}
     </update>
 </mapper>

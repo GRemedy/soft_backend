@@ -14,6 +14,7 @@ public class SubTrade {
     private Integer transactionId;
     private String reason;
     private Integer success;
+    private String rejectReason;
     private LocalDateTime returnTime;
     private LocalDateTime dealTime;
 }
