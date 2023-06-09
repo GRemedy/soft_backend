@@ -19,7 +19,7 @@ public interface ProductService {
 
     void perchase(Transaction transaction, Integer couponId);
 
-    void shoppingCart(ShoppingCart shoppingCart);
+    void shoppingCart(Integer id,List<Integer> ids);
 
     void comment(Comment comment);
 

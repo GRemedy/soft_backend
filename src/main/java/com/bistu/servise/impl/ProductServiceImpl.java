@@ -34,8 +34,10 @@ public class ProductServiceImpl implements ProductService {
     private final CouponUtils couponUtils;
     private final PointUtils pointUtils;
 
+    private final ShoppingCartUtils shoppingCartUtils;
 
-    public ProductServiceImpl(ProductMapper productMapper, ProToDisProMap proToDisProMap, UserMapper userMapper, UpdateRating updateRating, TransactionUtils transactionUtils, CouponUtils couponUtils, PointUtils pointUtils) {
+
+    public ProductServiceImpl(ProductMapper productMapper, ProToDisProMap proToDisProMap, UserMapper userMapper, UpdateRating updateRating, TransactionUtils transactionUtils, CouponUtils couponUtils, PointUtils pointUtils, ShoppingCartUtils shoppingCartUtils) {
         this.productMapper = productMapper;
         this.proToDisProMap = proToDisProMap;
         this.userMapper = userMapper;
@@ -43,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
         this.transactionUtils = transactionUtils;
         this.couponUtils = couponUtils;
         this.pointUtils = pointUtils;
+        this.shoppingCartUtils = shoppingCartUtils;
     }
 
 
@@ -86,10 +89,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void shoppingCart(ShoppingCart shoppingCart) {
-        shoppingCart.setCreateTime(LocalDateTime.now());
-        shoppingCart.setUpdateTime(LocalDateTime.now());
-        productMapper.shoppingCart(shoppingCart);
+    public void shoppingCart(Integer id,List<Integer> ids) {
+        List<ShoppingCart> shoppingCarts = shoppingCartUtils.shoppingCartUtils(id, ids);
+        productMapper.shoppingCart(shoppingCarts);
+
     }
 
     @Override

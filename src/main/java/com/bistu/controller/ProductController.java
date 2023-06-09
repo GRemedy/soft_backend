@@ -49,8 +49,8 @@ public class ProductController {
         return Result.success("购买成功");
     }
     @PutMapping("/shoppingCart")
-    public Result shoppingCart(@RequestBody ShoppingCart shoppingCart){
-        productService.shoppingCart(shoppingCart);
+    public Result shoppingCart(@RequestBody Integer id ,List<Integer> ids){
+        productService.shoppingCart(id,ids);
         return Result.success("成功添加到购物车");
     }
     @PutMapping("/comment")

@@ -36,7 +36,7 @@ public interface ProductMapper {
             " where id = #{productId} ")
     void updateProduct(Transaction transaction);
 
-    void shoppingCart(ShoppingCart shoppingCart);
+    void shoppingCart(List<ShoppingCart> shoppingCarts);
 
     void comment(Comment comment);
     @Update("update product set rating = #{rating} where id = #{id}")

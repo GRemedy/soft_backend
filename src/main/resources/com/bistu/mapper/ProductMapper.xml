@@ -64,10 +64,13 @@
         values(#{userId},#{productId},#{quantity},#{discount},#{status},#{paid},#{createTime},#{paymentTime},#{updateTime})
     </insert>
 
-    <insert id="shoppingCart" parameterType="com.bistu.entity.ShoppingCart">
+    <insert id="shoppingCart" parameterType="list">
         insert into shopping_cart
         (user_id,product_id,quantity,create_time,update_time)
-        values(#{userId},#{productId},#{quantity},#{createTime},#{updateTime})
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},#{item.productId},#{item.quantity},#{item.createTime},#{item.updateTime})
+        </foreach>
     </insert>
 
     <insert id="comment" parameterType="com.bistu.entity.Comment">
