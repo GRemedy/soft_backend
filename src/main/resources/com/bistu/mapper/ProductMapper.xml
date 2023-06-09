@@ -17,8 +17,9 @@
                 SELECT id FROM sub_merchant WHERE store_name LIKE CONCAT('%', #{storeName}, '%')
                 )
             </if>
+            and status != 'REVIEWING'
         </where>
-        where status != 'REVIEWING'
+
         <if test="price != null or salesVolume != null or rating != null">
             ORDER BY
             <choose>

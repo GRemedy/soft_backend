@@ -34,13 +34,6 @@ public class ProductController {
 
     @PostMapping("/getAll")
     public Result getAll(@RequestBody GetAllParam getAllParam) {
-        if (getAllParam == null){
-            GetAllParam getAllParam1 = new GetAllParam();
-            getAllParam1.setStart(1);
-            getAllParam1.setPageSize(20);
-            PageBean products = productService.getAll(getAllParam1);
-            return Result.success(products);
-        }
         PageBean products = productService.getAll(getAllParam);
         return Result.success(products);
     }

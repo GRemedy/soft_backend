@@ -20,6 +20,7 @@ public class GetAllParam {
    private String storeName ;
    private Double rating;
    boolean isDESC;
+
    public GetAllParam(){
       this.start = 1;
       this.pageSize = 20;
