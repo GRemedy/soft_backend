@@ -41,6 +41,5 @@ public class KaptchaController {
         ImageIO.write(image,"jpg",out);
         // 对字节组Base64编码
         return Result.success( Base64.getEncoder().encodeToString(out.toByteArray()));
-
     }
 }

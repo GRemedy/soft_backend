@@ -78,4 +78,6 @@ public interface UserMapper {
 
    @Update("update product set status = 'SELLING' where id in #{ids}")
    void reviewing(List<Integer> ids);
+
+   void pay(Transaction transaction);
 }

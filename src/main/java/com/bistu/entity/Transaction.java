@@ -16,7 +16,7 @@ public class Transaction {
     private int quantity;
     private CouponType discount;
     private TransactionStatus status;
-    private double paid;
+    private Double paid;
     private LocalDateTime createTime;
     private LocalDateTime paymentTime;
     private LocalDateTime deliveryTime;
