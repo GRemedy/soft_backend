@@ -191,10 +191,11 @@ public class UserServiceImpl implements UserService {
     public void pay(Transaction transaction){
         Integer rank = userMapper.getRank(transaction.getUserId());
         Double fee = merchantFeeUtils.getFee(transaction, rank);
-        transaction.setPaid(transaction.getPaid()-fee);
+        transaction.setPaid(transaction.getPaid());
         transaction.setUpdateTime(LocalDateTime.now());
         transaction.setStatus(TransactionStatus.RECEIVED);
         userMapper.updateTransaction(transaction);
+        transaction.setPaid(transaction.getPaid() - fee);
         userMapper.pay(transaction);
     }
 
