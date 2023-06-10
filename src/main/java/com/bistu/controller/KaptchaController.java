@@ -1,6 +1,7 @@
 package com.bistu.controller;
 
 import com.bistu.entity.Result;
+import com.bistu.entity.Storage;
 import com.google.code.kaptcha.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,11 @@ import java.util.Base64;
 public class KaptchaController {
 
     private final Producer kaptchaProducer;
+    private final Storage storage;
 
-    public KaptchaController(Producer kaptchaProducer) {
+    public KaptchaController(Producer kaptchaProducer, Storage storage) {
         this.kaptchaProducer = kaptchaProducer;
+        this.storage = storage;
     }
 
 
@@ -34,6 +37,7 @@ public class KaptchaController {
     public Result generateCaptcha() throws IOException {
         // 生成验证码图像
         String text=kaptchaProducer.createText();
+        storage.setCaptcha(text);
         log.info(text);
         // 生成图片验证码
         BufferedImage image = kaptchaProducer.createImage(text);
