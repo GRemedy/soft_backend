@@ -36,6 +36,12 @@
         <if test="image != null">
             image = #{image},
         </if>
+        <if test="email != null">
+            email = #{email},
+        </if>
+        <if test="phoneNumber != null">
+            phone_number = #{phoneNumber}
+        </if>
         <if test="selfIntroduction != null">
             self_introduction = #{selfIntroduction},
         </if>
