@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubMerchant {
-    private int id;
-    private int userId;
+    private Integer id;
+    private Integer userId;
     private String storeName;
     private String license;
     private Integer storeRank;

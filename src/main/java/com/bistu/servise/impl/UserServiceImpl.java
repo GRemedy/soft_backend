@@ -26,16 +26,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserToDisUserMap userToDisUserMap;
-
     private final ProToDisProMap proToDisProMap;
     private final TransToProductMap transToProductMap;
     private final MerchantFeeUtils merchantFeeUtils;
     private final RefundUtils refundUtils;
-
     private final TimeUtils timeUtils;
+    private final ShoppingCartToTransactionMap shoppingCartToTransactionMap;
 
 
-    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap, MerchantFeeUtils merchantFeeUtils, RefundUtils refundUtils, TimeUtils timeUtils) {
+    public UserServiceImpl(UserMapper userMapper, UserToDisUserMap userToDisUserMap, ProToDisProMap proToDisProMap, TransToProductMap transToProductMap, MerchantFeeUtils merchantFeeUtils, RefundUtils refundUtils, TimeUtils timeUtils, ShoppingCartToTransactionMap shoppingCartToTransactionMap) {
         this.userMapper = userMapper;
         this.userToDisUserMap = userToDisUserMap;
         this.proToDisProMap = proToDisProMap;
@@ -43,6 +42,7 @@ public class UserServiceImpl implements UserService {
         this.merchantFeeUtils = merchantFeeUtils;
         this.refundUtils = refundUtils;
         this.timeUtils = timeUtils;
+        this.shoppingCartToTransactionMap = shoppingCartToTransactionMap;
     }
 
     @Override
@@ -164,6 +164,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void charge(ChargeRecord chargeRecord) {
         chargeRecord.setChargeTime(LocalDateTime.now());
         userMapper.chargeAccount(chargeRecord);
@@ -186,6 +187,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void pay(Transaction transaction){
         Integer rank = userMapper.getRank(transaction.getUserId());
         Double fee = merchantFeeUtils.getFee(transaction, rank);
@@ -202,6 +204,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void refunding(SubTrade subTrade){
         Transaction transaction = userMapper.getUpdateTime(subTrade.getTransactionId());
         Boolean expressed = timeUtils.express24Hours(transaction.getUpdateTime(), LocalDateTime.now());
@@ -217,9 +220,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void dealRefund(SubTrade subTrade){
-        Transaction transaction = new Transaction();
-        transaction.setId(subTrade.getTransactionId());
+        Transaction transaction = userMapper.getTransaction(subTrade.getTransactionId());
         transaction.setDealTime(LocalDateTime.now());
         transaction.setUpdateTime(LocalDateTime.now());
         TransactionStatus status = refundUtils.getStatus(subTrade.getSuccess());
@@ -227,6 +230,7 @@ public class UserServiceImpl implements UserService {
         subTrade.setDealTime(LocalDateTime.now());
         if (subTrade.getSuccess() != 1){
             subTrade.setRejectReason("");
+            userMapper.dealRefundAccount(transaction);
         }
         userMapper.dealRefunding(subTrade);
         userMapper.dealRefund(transaction);
@@ -235,5 +239,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<SubTrade> getSubTrade(Integer id){
         return userMapper.getSubTrade(id);
+    }
+
+    @Override
+    public List<ShoppingCart> getShoppingCart(Integer id){
+        return userMapper.getShoppingCart(id);
+    }
+
+    @Override
+    @Transactional
+    public void quickPay(List<ShoppingCart> shoppingCarts){
+        List<Transaction> transactions = shoppingCartToTransactionMap.shopMap(shoppingCarts);
+        userMapper.quickPay(transactions);
+        userMapper.dropShoppingCart(shoppingCarts);
     }
 }

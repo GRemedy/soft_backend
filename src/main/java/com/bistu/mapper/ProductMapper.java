@@ -57,4 +57,5 @@ public interface ProductMapper {
     @Update("update transaction set delivery_time = #{deliveryTime}," +
             "update_time = #{updateTime},status = #{status} where id = #{id}")
     void delivery(Transaction transaction);
+
 }

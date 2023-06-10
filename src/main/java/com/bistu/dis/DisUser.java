@@ -22,4 +22,5 @@ public class DisUser {
     private String bankCardNumber;
     private Identity identity;
     private String image;
+    private Integer state;
 }

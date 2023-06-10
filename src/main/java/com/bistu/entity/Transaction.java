@@ -4,16 +4,18 @@ import com.bistu.Enum.CouponType;
 import com.bistu.Enum.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Transaction {
-    private int id;
-    private int userId;
-    private int productId;
-    private int quantity;
+    private Integer id;
+    private Integer userId;
+    private Integer productId;
+    private Integer quantity;
     private CouponType discount;
     private TransactionStatus status;
     private Double paid;
@@ -22,7 +24,5 @@ public class Transaction {
     private LocalDateTime deliveryTime;
     private LocalDateTime dealTime;
     private LocalDateTime updateTime;
-    public Transaction(){
-        this.quantity = 1;
-    }
+
 }

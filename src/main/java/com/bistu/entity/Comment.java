@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
-    private int id;
-    private int userId;
-    private int productId;
-    private int grade;
+    private Integer id;
+    private Integer userId;
+    private Integer productId;
+    private Integer grade;
     private String content;
-    private int attitude;
+    private Integer attitude;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

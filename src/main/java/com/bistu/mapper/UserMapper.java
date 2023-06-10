@@ -106,4 +106,18 @@ public interface UserMapper {
 
     @Select("select * from sub_trade where user_id = #{id}")
     List<SubTrade> getSubTrade(Integer id);
+
+    @Update("update account set balance = balance + #{paid} ," +
+            "update_time = #{updateTime},income_time = #{dealTime} where user_id = #{userId}")
+    void dealRefundAccount(Transaction transaction);
+
+    @Select("select * from transaction where id = #{id}")
+    Transaction getTransaction(Integer id);
+
+    @Select("select * from shopping_cart where user_id = #{id}")
+    List<ShoppingCart> getShoppingCart(Integer id);
+
+    void quickPay(List<Transaction> transactions);
+
+    void dropShoppingCart(List<ShoppingCart> shoppingCarts);
 }

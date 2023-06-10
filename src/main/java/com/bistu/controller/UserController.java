@@ -114,4 +114,15 @@ public class UserController {
         List<SubTrade> subTrade = userService.getSubTrade(id);
         return Result.success(subTrade);
     }
+    @GetMapping("/getShoppingCart")
+    public Result getShoppingCart(Integer id){
+        List<ShoppingCart> shoppingCart = userService.getShoppingCart(id);
+        return Result.success(shoppingCart);
+    }
+
+    @PutMapping("/quickPay")
+    public Result quickPay(List<ShoppingCart> shoppingCarts){
+        userService.quickPay(shoppingCarts);
+        return Result.success("一键支付成功");
+    }
 }

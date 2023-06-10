@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoppingCart {
-    private int id;
-    private int userId;
-    private int productId;
-    private int quantity;
+    private Integer id;
+    private Integer userId;
+    private Integer productId;
+    private Integer quantity;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

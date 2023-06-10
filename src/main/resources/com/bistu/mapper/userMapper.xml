@@ -60,4 +60,20 @@
         update sub_trade set success = #{success} ,
         deal_time = #{dealTime} , reject_reason = #{rejectReason} where id = #{id}
     </update>
+
+    <insert id="quickPay" parameterType="list">
+        insert into transaction (user_id,product_id,quantity,status,paid,create_time,payment_time,update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},#{item.productId},#{item.quantity},
+            #{item.status},#{item.paid},#{item.createTime},#{item.paymentTime},#{item.updateTime})
+        </foreach>
+    </insert>
+
+    <delete id="dropShoppingCart" parameterType="list">
+        DELETE FROM shopping_cart WHERE id IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item.id}
+        </foreach>
+    </delete>
 </mapper>

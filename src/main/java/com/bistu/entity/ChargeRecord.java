@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChargeRecord {
-    private int id;
-    private int userId;
-    private double amount;
+    private Integer id;
+    private Integer userId;
+    private Integer amount;
     private LocalDateTime chargeTime;
 }

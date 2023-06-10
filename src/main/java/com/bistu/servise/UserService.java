@@ -121,4 +121,8 @@ public interface UserService {
     void dealRefund(SubTrade subTrade);
 
     List<SubTrade> getSubTrade(Integer id);
+
+    List<ShoppingCart> getShoppingCart(Integer id);
+
+    void quickPay(List<ShoppingCart> shoppingCarts);
 }

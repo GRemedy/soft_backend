@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentRecord {
-    private int id;
-    private int userId;
-    private int merchantId;
-    private double amount;
+    private Integer id;
+    private Integer userId;
+    private Integer merchantId;
+    private Double amount;
     private LocalDateTime paymentTime;
 }

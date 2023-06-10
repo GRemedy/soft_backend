@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GetAllParam {
-   private int start;
-   private int pageSize;
+   private Integer start;
+   private Integer pageSize;
    private String name;
    private String category;
    private Double price;
