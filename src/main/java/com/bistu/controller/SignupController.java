@@ -26,6 +26,6 @@ public class SignupController {
     public Result signup(@RequestBody User user) {
         exceptionUtils.throwException(user);
         userService.signup(user);
-        return Result.success();
+        return Result.success("注册成功");
     }
 }

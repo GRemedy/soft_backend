@@ -18,8 +18,8 @@ public interface ProductMapper {
 
     List<Product> getAll(GetAllParam getAllParam);
 
-    @Select("select count(*) from product where status != 'REVIEWING'")
-    Long getCount();
+
+    Long getCount(GetAllParam getAllParam);
 
     void perchase(Transaction transaction);
 

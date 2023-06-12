@@ -32,8 +32,8 @@ public class UserController {
         userService.registerMerchant(id,storeName,license);
         return Result.success("注册成功，请等待管理员审核");
     }
-    @GetMapping("queryMessage/{id}")
-    public Result queryMessage(@PathVariable Integer id){
+    @GetMapping("queryMessage")
+    public Result queryMessage(Integer id){
         return Result.success(userService.queryMessage(id));
     }
     @PutMapping("updateMessage")

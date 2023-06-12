@@ -2,6 +2,7 @@ package com.bistu.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author: Gremedy
@@ -10,19 +11,13 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class GetAllParam {
    private Integer start;
    private Integer pageSize;
    private String name;
    private String category;
-   private Double price;
-   private Integer salesVolume;
    private String storeName ;
-   private Double rating;
-   boolean isDESC;
-
-   public GetAllParam(){
-      this.start = 1;
-      this.pageSize = 20;
-   }
+   private String sortKey;
+   private Boolean isDESC;
 }

@@ -51,10 +51,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageBean getAll(GetAllParam getAllParam) {
-        Long count = productMapper.getCount();
-        getAllParam.setName("%" + getAllParam.getName() + "%");
-        getAllParam.setCategory("%" + getAllParam.getCategory() + "%");
-        getAllParam.setStoreName("%" + getAllParam.getStoreName() + "%");
+        Long count = productMapper.getCount(getAllParam);
         getAllParam.setStart((getAllParam.getStart()-1) * getAllParam.getPageSize());
         List<Product> products = productMapper.getAll(getAllParam);
         List<DisProduct> disProducts = proToDisProMap.proToDisProMap(products);
@@ -142,6 +139,12 @@ public class ProductServiceImpl implements ProductService {
         transaction.setStatus(TransactionStatus.SHIPPED);
         transaction.setUpdateTime(LocalDateTime.now());
         productMapper.delivery(transaction);
+    }
+
+    @Override
+    public DisProduct getMessage(Integer id) {
+        Product product = productMapper.getProduct(id);
+        return proToDisProMap.proToDisProMap(product);
     }
 
 

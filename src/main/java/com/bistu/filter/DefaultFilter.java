@@ -25,8 +25,8 @@ public class DefaultFilter implements Filter {
 
         String url = req.getRequestURI();    //获取请求的url
 
-        //如果请求包含login或者signup，则直接放行
-        if(url.contains("login")||url.contains("signup")||url.contains("code")){
+        //如果请求包含login、signup、code、product/getAll，则直接放行
+        if(url.contains("login")||url.contains("signup")||url.contains("code")||url.contains("product/getAll")){
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }

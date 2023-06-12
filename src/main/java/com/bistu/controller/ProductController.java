@@ -1,8 +1,10 @@
 package com.bistu.controller;
 
+import com.bistu.dis.DisProduct;
 import com.bistu.entity.*;
 import com.bistu.servise.ProductService;
 import com.bistu.utils.ExceptionUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
+@Slf4j
 public class ProductController {
     private final ProductService productService;
     private final ExceptionUtils exceptionUtils;
@@ -26,18 +29,29 @@ public class ProductController {
 
     /**
     * @author Gremedy
-    * @description
-    * @date 2023/6/6 14:58
-    * @param getAllParam 分页参数对象
-    * @return Result
+    * @description         
+    * @date 2023/6/12 11:13
+    * @param start , pageSize , name , category , price , salesVolume , storeName , rating , isDESC   
+    * @return Result  
     **/
+    
 
     @PostMapping("/getAll")
-    public Result getAll(@RequestBody GetAllParam getAllParam) {
+    public Result getAll(@RequestParam(defaultValue = "1") Integer start,
+                         @RequestParam(defaultValue = "20") Integer pageSize,
+                         String name,String category,String sortKey,
+                         String storeName, Boolean isDESC ) {
+        GetAllParam getAllParam = new GetAllParam(start,pageSize,name,category,storeName,sortKey,isDESC);
         PageBean products = productService.getAll(getAllParam);
         return Result.success(products);
     }
 
+    @GetMapping("/getMessage")
+    public Result getMessage(Integer id){
+        DisProduct message = productService.getMessage(id);
+        return Result.success(message);
+
+    }
     @PostMapping("/prePerchase")
     public Result prePerchase(@RequestBody Transaction transaction){
        return Result.success(productService.prePerchase(transaction));

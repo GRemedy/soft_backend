@@ -1,5 +1,6 @@
 package com.bistu.servise;
 
+import com.bistu.dis.DisProduct;
 import com.bistu.entity.*;
 
 import java.util.List;
@@ -29,4 +30,6 @@ public interface ProductService {
     void offShelves(List<Integer> ids);
 
     void delivery(Transaction transaction);
+
+    DisProduct getMessage(Integer id);
 }
